@@ -2,11 +2,6 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('OrderHeader', {
-		id: {
-			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			primaryKey: true
-		},
 		order_user_id: {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
