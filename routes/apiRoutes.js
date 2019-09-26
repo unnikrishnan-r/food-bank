@@ -1,24 +1,29 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
+  // Get all products
+  app.get("/api/getProductList", function(req, res) {
+    console.log("Get All products");
+    db.ProductCatalog.findAll({}).then(function(productList) {
+      res.json(productList);
     });
   });
 
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
+  // Create a new Product
+  app.post("/api/createProduct", function(req, res) {
+    console.log("Create a product");
+
+    db.ProductCatalog.create(req.body).then(function(createdProduct) {
+      res.sendStatus(200);
     });
   });
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
+  // Delete an product using id
+  app.delete("/api/deleteProduct/:id", function(req, res) {
+    console.log("Delete a product");
+
+    db.ProductCatalog.destroy({ where: { id: req.params.id } }).then(function(deletedProduct) {
+      res.sendStatus(200);
     });
   });
 };
