@@ -3,13 +3,13 @@ CREATE DATABASE foodbank_db;
 
 USE foodbank_db;
 
-CREATE TABLE `user_role` (
+CREATE TABLE `UserRole` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_role_name` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ;
 
-CREATE TABLE `user` (
+CREATE TABLE `User` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(20) NOT NULL,
   `user_password` varchar(20) NOT NULL,
@@ -18,16 +18,16 @@ CREATE TABLE `user` (
   `user_addr_1` varchar(45) DEFAULT NULL,
   `user_addr_2` varchar(45) DEFAULT NULL,
   `user_addr_city` varchar(45) DEFAULT NULL,
-  `user_add_province` varchar(45) DEFAULT NULL,
-  `user_add_postal_code` varchar(45) DEFAULT NULL,
+  `user_addr_province` varchar(45) DEFAULT NULL,
+  `user_addr_postal_code` varchar(45) DEFAULT NULL,
   `user_phone_no` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_role_id_idx` (`user_role_id`),
-  CONSTRAINT `user_role_id` FOREIGN KEY (`user_role_id`) REFERENCES `user_role` (`id`)
+  CONSTRAINT `user_role_id` FOREIGN KEY (`user_role_id`) REFERENCES `UserRole` (`id`)
 ) ;
 
 
-CREATE TABLE `product_catalog` (
+CREATE TABLE `ProductCatalog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(45) NOT NULL,
   `product_description` varchar(200) DEFAULT NULL,
@@ -39,28 +39,28 @@ CREATE TABLE `product_catalog` (
   `product_posted_date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `supplier_id_idx` (`supplier_id`),
-  CONSTRAINT `supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `User` (`id`)
 ) ;
 
-CREATE TABLE `user_cart_header` (
+CREATE TABLE `UserCartHeader` (
   `id` int(11) NOT NULL,
   `cart_owner_id` int(11) NOT NULL,
   `cart_status` varchar(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cart_owner_id_UNIQUE` (`cart_owner_id`),
   KEY `cart_owner_id_idx` (`cart_owner_id`),
-  CONSTRAINT `cart_owner_id` FOREIGN KEY (`cart_owner_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `cart_owner_id` FOREIGN KEY (`cart_owner_id`) REFERENCES `User` (`id`)
 ) ;
 
-CREATE TABLE `user_cart_detail` (
+CREATE TABLE `UserCartDetail` (
   `cart_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   PRIMARY KEY (`cart_id`),
-  CONSTRAINT `cart_id` FOREIGN KEY (`cart_id`) REFERENCES `user_cart_header` (`id`)
+  CONSTRAINT `cart_id` FOREIGN KEY (`cart_id`) REFERENCES `UserCartHeader` (`id`)
 ) ;
 
-CREATE TABLE `order_history` (
+CREATE TABLE `OrderHeader` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_user_id` int(11) NOT NULL,
   `order_supplier_id` int(11) NOT NULL,
@@ -68,16 +68,16 @@ CREATE TABLE `order_history` (
   `order_status` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `order_user_id_idx` (`order_user_id`),
-  CONSTRAINT `order_user_id` FOREIGN KEY (`order_user_id`) REFERENCES `user` (`id`)
+  CONSTRAINT `order_user_id` FOREIGN KEY (`order_user_id`) REFERENCES `User` (`id`)
 ) ;
 
 
-CREATE TABLE `order_history_detail` (
+CREATE TABLE `OrderDetail` (
   `order_id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
-  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `order_history` (`id`)
+  CONSTRAINT `order_id` FOREIGN KEY (`order_id`) REFERENCES `OrderHeader` (`id`)
 ) ;
 
 
