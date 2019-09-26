@@ -1,14 +1,17 @@
-module.exports = function (sequelizeConnection, DataTypes) {
-  const UserRole = sequelizeConnection.define("UserRole", {
-    user_role_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    }
-  });
+/* jshint indent: 1 */
 
-  UserRole.associate = function(db){
-    db.UserRole.hasMany(db.User);
-  };
-
-  return UserRole;
+module.exports = function(sequelize, DataTypes) {
+	return sequelize.define('UserRole', {
+		id: {
+			type: DataTypes.INTEGER(11),
+			allowNull: false,
+			primaryKey: true
+		},
+		user_role_name: {
+			type: DataTypes.STRING(45),
+			allowNull: false
+		}
+	}, {
+		tableName: 'UserRole'
+	});
 };
