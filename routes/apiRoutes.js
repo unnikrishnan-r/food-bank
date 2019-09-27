@@ -55,7 +55,7 @@ module.exports = function (app) {
   */
   app.post("/api/orders", function (req, res) {
     console.log("Create an order");
-    db.OrderHeader.create(req.body)
+    db.OrderHeader.create(req.body, { include: [OrderDetail] })
       .then(function (createdOrder) {
         res.sendStatus(200);
       }).catch(function (error) {
