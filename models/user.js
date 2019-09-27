@@ -2,11 +2,6 @@
 
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('User', {
-		id: {
-			type: DataTypes.INTEGER(11),
-			allowNull: false,
-			primaryKey: true
-		},
 		user_name: {
 			type: DataTypes.STRING(20),
 			allowNull: false
@@ -28,11 +23,11 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		},
 		user_addr_1: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(100),
 			allowNull: true
 		},
 		user_addr_2: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(100),
 			allowNull: true
 		},
 		user_addr_city: {
