@@ -67,7 +67,7 @@ module.exports = function (app) {
   app.delete("/api/orders/:id", function (req, res) {
     console.log("Delete an order");
     db.OrderHeader.destroy({ where: { id: req.params.id } })
-      .then(function (deletedOrder) {
+      .then(function (affectedCount) {
         res.sendStatus(200);
       }).catch(function (error) {
         res.sendStatus(500);
@@ -78,7 +78,7 @@ module.exports = function (app) {
   app.put("/api/orders", function (req, res) {
     console.log("Updates an order status");
     db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.params.id } })
-      .then(function (deletedOrder) {
+      .then(function (affectedCount) {
         res.sendStatus(200);
       }).catch(function (error) {
         res.sendStatus(500);
