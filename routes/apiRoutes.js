@@ -60,7 +60,7 @@ module.exports = function (app) {
         res.sendStatus(200);
       }).catch(function (error) {
         res.sendStatus(400);
-      });;
+      });
   });
 
   // Delete an order using id
@@ -71,7 +71,7 @@ module.exports = function (app) {
         res.sendStatus(200);
       }).catch(function (error) {
         res.sendStatus(500);
-      });;
+      });
   });
 
   // Updates an order status
@@ -82,6 +82,6 @@ module.exports = function (app) {
         res.sendStatus(200);
       }).catch(function (error) {
         res.sendStatus(500);
-      });;
+      });
   });
 };
