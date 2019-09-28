@@ -27,20 +27,44 @@ INSERT INTO `foodbank_db`.`User`
 `user_name`,
 `user_password`,
 `user_role_id`,
+`user_addr_1`,
+`user_addr_city`,
+`user_addr_province`,
+`user_addr_postal_code`,
 `createdAt`,
 `updatedAt`)
 VALUES
-("Walmart", "abcd", 1,now(), now());
+("Walmart",
+ "abcd", 
+ 1,
+ "800 Matheson Blvd W",
+ "Mississauga",
+"Ontario",
+"L5V 2N6",
+ now(), 
+ now());
 
 INSERT INTO `foodbank_db`.`User`
 (
 `user_name`,
 `user_password`,
 `user_role_id`,
+`user_addr_1`,
+`user_addr_city`,
+`user_addr_province`,
+`user_addr_postal_code`,
 `createdAt`,
 `updatedAt`)
 VALUES
-("Costco", "abcd", 1,now(), now());
+("Costco", 
+"abcd", 
+1,
+"5900 Rodeo Dr",
+"Mississauga",
+"Ontario",
+"L5R 3S9",
+now(), 
+now());
 
 INSERT INTO `foodbank_db`.`User`
 (

@@ -20,7 +20,9 @@ module.exports = function (app) {
     console.log("Get All vendor products");
     db.ProductCatalog.findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }] })
       .then(productList => {
-        productList.map(product => { this.product_expiry_date = moment(this.product_expiry_date, "MM/DD/YYYY") });
+        productList.map(product => {
+          product.product_expiry_date = moment(product.product_expiry_date, "YYYY-MM-DD").format("MM/DD/YYYY");
+        });
         res.render("customerDashboard", { userList: {}, productList: productList });
       })
       .catch(error => {
