@@ -1,7 +1,7 @@
 /* jshint indent: 1 */
 
-module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('User', {
+module.exports = function (sequelize, DataTypes) {
+	var User = sequelize.define('User', {
 		user_name: {
 			type: DataTypes.STRING(20),
 			allowNull: false
@@ -49,4 +49,10 @@ module.exports = function(sequelize, DataTypes) {
 	}, {
 		tableName: 'User'
 	});
+
+	User.associate = function (models) {
+		models.User.belongsTo(models.UserRole);
+	}
+
+	return User;
 };

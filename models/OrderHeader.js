@@ -12,7 +12,11 @@ module.exports = function (sequelize, DataTypes) {
 		},
 		order_supplier_id: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false
+			allowNull: false,
+			references: {
+				model: 'User',
+				key: 'id'
+			}
 		},
 		order_item_count: {
 			type: DataTypes.INTEGER(11),
@@ -27,8 +31,9 @@ module.exports = function (sequelize, DataTypes) {
 	});
 
 	OrderHeader.associate = function (models) {
-		console.log(models);
-		models.OrderHeader.belongsTo(models.User, { foreignKey: { allowNull: false } });
+		models.OrderHeader.belongsTo(models.User, { as: 'Buyer', foreignKey: { name: 'order_user_id', allowNull: false } });
+		models.OrderHeader.belongsTo(models.User, { as: 'Vendor', foreignKey: { name: 'order_supplier_id', allowNull: false } });
+		models.OrderHeader.hasMany(models.OrderDetail, { foreignKey: { name: 'order_id', allowNull: false } });
 	}
 
 	return OrderHeader;

@@ -1,13 +1,15 @@
 var db = require("../models");
+var User = db.User;
 
 module.exports = function (app) {
     // Get all orders
     app.get("/api/orders", function (req, res) {
         console.log("Get All Orders");
-        db.OrderHeader.findAll({ include: [User] })
+        db.OrderHeader.findAll({ include: [{ model: User, as: 'Buyer' }, { model: User, as: 'Vendor' }] })
             .then(function (orderList) {
                 res.json(orderList);
             }).catch(function (error) {
+                console.log(error);
                 res.sendStatus(500);
             });
     });
@@ -15,10 +17,11 @@ module.exports = function (app) {
     // Get an order with it's order details and user info
     app.get("/api/orders/:id", function (req, res) {
         console.log("Get an order and order details");
-        db.OrderHeader.findAll({ where: { id: req.params.id }, include: [OrderDetail, User] })
+        db.OrderHeader.findAll({ where: { id: req.params.id }, include: [db.OrderDetail, { model: User, as: 'Buyer' }, { model: User, as: 'Vendor' }] })
             .then(function (orderList) {
                 res.json(orderList);
             }).catch(function (error) {
+                console.log(error);
                 res.sendStatus(500);
             });
     });
@@ -27,10 +30,11 @@ module.exports = function (app) {
     app.get("/api/orders/user/:id", function (req, res) {
         console.log("Get an order and order details");
         db.OrderHeader
-            .findAll({ include: [{ model: User, where: { id: req.params.id } }] })
+            .findAll({ include: [{ model: db.User, as: 'Buyer', where: { id: req.params.id } }] })
             .then(function (orderList) {
                 res.json(orderList);
             }).catch(function (error) {
+                console.log(error);
                 res.sendStatus(500);
             });
     });
@@ -54,10 +58,11 @@ module.exports = function (app) {
     */
     app.post("/api/orders", function (req, res) {
         console.log("Create an order");
-        db.OrderHeader.create(req.body, { include: [OrderDetail] })
+        db.OrderHeader.create(req.body, { include: [db.OrderDetail] })
             .then(function (createdOrder) {
                 res.sendStatus(200);
             }).catch(function (error) {
+                console.log(error);
                 res.sendStatus(400);
             });
     });
@@ -69,6 +74,7 @@ module.exports = function (app) {
             .then(function (affectedCount) {
                 res.sendStatus(200);
             }).catch(function (error) {
+                console.log(error);
                 res.sendStatus(500);
             });
     });
@@ -80,6 +86,7 @@ module.exports = function (app) {
             .then(function (affectedCount) {
                 res.sendStatus(200);
             }).catch(function (error) {
+                console.log(error);
                 res.sendStatus(500);
             });
     });

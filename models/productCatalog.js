@@ -1,7 +1,7 @@
 /* jshint indent: 1 */
 
-module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('ProductCatalog', {
+module.exports = function (sequelize, DataTypes) {
+	var ProductCatalog = sequelize.define('ProductCatalog', {
 		product_name: {
 			type: DataTypes.STRING(45),
 			allowNull: false
@@ -44,4 +44,11 @@ module.exports = function(sequelize, DataTypes) {
 	}, {
 		tableName: 'ProductCatalog'
 	});
+
+	ProductCatalog.associate = function (models) {
+		models.ProductCatalog.belongsTo(models.User, { as: 'Vendor', foreignKey: { name: 'supplier_id', allowNull: false } });
+		models.ProductCatalog.hasMany(models.OrderDetail, { foreignKey: { name: 'product_id', allowNull: false } });
+	}
+
+	return ProductCatalog;
 };
