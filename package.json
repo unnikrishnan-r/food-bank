@@ -7,8 +7,7 @@
     "start": "node server.js",
     "watch": "nodemon server.js",
     "lint": "eslint --quiet .",
-    "fix": "eslint --fix .",
-    "test": "npm run lint"
+    "fix": "eslint --fix ."
   },
   "license": "ISC",
   "dependencies": {
