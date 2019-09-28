@@ -23,14 +23,19 @@ app.set("view engine", "handlebars");
 
 // Routes
 require("./routes/apiRoutes")(app);
-// require("./routes/htmlRoutes")(app);
+require("./routes/orderAPIRoute")(app);
 
 var syncOptions = { force: false };
 
+<<<<<<< HEAD
+=======
+console.log(syncOptions);
+
+>>>>>>> master
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-  console.log("Detected DEV/TEST env, force syncing database")
+  console.log("Detected DEV/TEST env, force syncing database");
   syncOptions.force = true;
 }
 

@@ -9,6 +9,17 @@ now(),
 now()
 );
 
+INSERT INTO `foodbank_db`.`UserRole`
+(
+`user_role_name`,
+`createdAt`,
+`updatedAt`)
+VALUES
+( "Buyer",
+now(),
+now()
+);
+
 INSERT INTO `foodbank_db`.`User`
 (
 `user_name`,
@@ -18,6 +29,16 @@ INSERT INTO `foodbank_db`.`User`
 `updatedAt`)
 VALUES
 ("Walmart", "abcd", 1,now(), now());
+
+INSERT INTO `foodbank_db`.`User`
+(
+`user_name`,
+`user_password`,
+`user_role_id`,
+`createdAt`,
+`updatedAt`)
+VALUES
+("Jane", "abcd",2,now(), now());
 
 
 INSERT INTO `foodbank_db`.`ProductCatalog`
@@ -44,6 +65,38 @@ VALUES
 "2019-09-26",
 now(),
 now()
-)
+);
 
+
+INSERT INTO `foodbank_db`.`OrderHeader` 
+(order_user_id
+,order_supplier_id
+,order_item_count
+,order_status
+,createdAt
+,updatedAt)
+VALUES (
+2,
+1,
+1,
+'Open',
+now(),
+now()
+);
+
+INSERT INTO `foodbank_db`.`OrderDetail`
+(
+	order_id,
+    product_id,
+    quantity,
+    createdAt,
+    updatedAt
+)
+VALUES (
+	1,
+    1,
+    1,
+    now(),
+    now()
+);
 

@@ -1,8 +1,8 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Get all products
-  app.get("/api/getProductList", function(req, res) {
+  app.get("/api/getProductList", function (req, res) {
     console.log("Get All products");
     db.ProductCatalog.findAll({})
       .then(productList => {
@@ -15,7 +15,7 @@ module.exports = function(app) {
   });
 
   // Create a new Product
-  app.post("/api/createProduct", function(req, res) {
+  app.post("/api/createProduct", function (req, res) {
     console.log("Create a product");
 
     db.ProductCatalog.create(req.body)
@@ -29,7 +29,7 @@ module.exports = function(app) {
   });
 
   // Delete an product using id
-  app.delete("/api/deleteProduct/:id", function(req, res) {
+  app.delete("/api/deleteProduct/:id", function (req, res) {
     console.log("Delete a product");
 
     db.ProductCatalog.destroy({
@@ -45,4 +45,5 @@ module.exports = function(app) {
         res.sendStatus(400);
       });
   });
+
 };
