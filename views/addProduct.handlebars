@@ -11,9 +11,10 @@
   KEY `supplier_id_idx` (`supplier_id`),
   CONSTRAINT `supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `User` (`id`) --}}
 
-<div class="login-form">
+<div class="add-product-form">
     <h2 class="sub-title">Add Product</h2>
     <form class="create-form">
+
 
         <div class="form-group">
             <label for="productName">Product Name: </label>
@@ -25,6 +26,10 @@
         </div>
 
         {{!-- date --}}
+        <div class="form-group">
+            <label for="expiryDate">Expiry Date: </label>
+            <input type="date" id="expiryDate" name="expiryDate">
+        </div>
 
         <div class="form-group">
             <label for="perishable">Perishable?</label><br>
@@ -32,21 +37,15 @@
             <input type="radio" name="perishable" value="0"> No
         </div>
 
-
         <div class="form-group">
-            <label for="productDesc">Product Description: </label>
-            <input type="text" id="productDesc" name="productDesc">
-        </div>
-
-        <div class="form-group">
-            <label for="productDesc">Quantity: </label>
-            <input type="number" id="productDesc" name="productDesc">
+            <label for="originalQty">Quantity: </label>
+            <input type="number" id="originalQty" name="originalQty">
         </div>
 
 
-        <button class="main-btn" id="login-btn" type="submit">Sign In</button>
+        <button class="main-btn" id="add-product-btn" type="submit">Add Product</button>
     </form>
 </div>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/login.js"></script>
+<script src="/js/addProduct.js"></script>
