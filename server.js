@@ -27,11 +27,6 @@ require("./routes/orderAPIRoute")(app);
 
 var syncOptions = { force: false };
 
-<<<<<<< HEAD
-=======
-console.log(syncOptions);
-
->>>>>>> master
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
