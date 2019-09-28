@@ -20,6 +20,8 @@ now(),
 now()
 );
 
+
+
 INSERT INTO `foodbank_db`.`User`
 (
 `user_name`,
@@ -29,6 +31,16 @@ INSERT INTO `foodbank_db`.`User`
 `updatedAt`)
 VALUES
 ("Walmart", "abcd", 1,now(), now());
+
+INSERT INTO `foodbank_db`.`User`
+(
+`user_name`,
+`user_password`,
+`user_role_id`,
+`createdAt`,
+`updatedAt`)
+VALUES
+("Costco", "abcd", 1,now(), now());
 
 INSERT INTO `foodbank_db`.`User`
 (
