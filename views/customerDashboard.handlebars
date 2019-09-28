@@ -1,0 +1,21 @@
+{{#each userList}}
+<ul>
+    <li>
+        <a href="/api/products/vendor/{{id}}">{{user_name}}</a><br />
+        {{user_addr_1}} <br />
+        {{user_addr_2}} <br />
+        {{user_addr_city}}
+    </li>
+</ul>
+{{/each}}
+
+{{#each productList}}
+<ul>
+    <li>
+        {{product_name}} <br />
+        {{product_description}} <br />
+        {{product_expiry_date}} <br />
+        Perishable: {{#if product_perishable}}Y{{else}}N{{/if}}<br />
+    </li>
+</ul>
+{{/each}}

@@ -1,4 +1,5 @@
 var db = require("../models");
+var moment = require("moment");
 
 module.exports = function (app) {
   // Get all products
@@ -7,6 +8,20 @@ module.exports = function (app) {
     db.ProductCatalog.findAll({})
       .then(productList => {
         res.json(productList);
+      })
+      .catch(error => {
+        console.error(error);
+        res.sendStatus(400);
+      });
+  });
+
+  // Get all vendor products
+  app.get("/api/products/vendor/:id", function (req, res) {
+    console.log("Get All vendor products");
+    db.ProductCatalog.findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }] })
+      .then(productList => {
+        productList.map(product => { this.product_expiry_date = moment(this.product_expiry_date, "MM/DD/YYYY") });
+        res.render("customerDashboard", { userList: {}, productList: productList });
       })
       .catch(error => {
         console.error(error);

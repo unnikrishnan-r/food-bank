@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.get("/api/orders", function (req, res) {
     console.log("Get All Orders");
     db.OrderHeader.findAll({ include: [{ model: db.User, as: "Buyer" }, { model: db.User, as: "Vendor" }] })
-      .then(function (orderList) {
+      .then(orderList => {
         res.json(orderList);
       }).catch(function (error) {
         console.log(error);
@@ -18,7 +18,7 @@ module.exports = function (app) {
   app.get("/api/orders/:id", function (req, res) {
     console.log("Get an order and order details");
     db.OrderHeader.findAll({ where: { id: req.params.id }, include: [{ model: db.OrderDetail, include: [db.ProductCatalog] }, { model: db.User, as: "Buyer" }, { model: db.User, as: "Vendor" }] })
-      .then(function (orderList) {
+      .then(orderList => {
         res.json(orderList);
       }).catch(function (error) {
         console.log(error);
@@ -31,7 +31,7 @@ module.exports = function (app) {
     console.log("Get an order");
     db.OrderHeader
       .findAll({ include: [{ model: db.User, as: "Buyer", where: { id: req.params.id } }] })
-      .then(function (orderList) {
+      .then(orderList => {
         res.json(orderList);
       }).catch(function (error) {
         console.log(error);
@@ -44,7 +44,7 @@ module.exports = function (app) {
     console.log("Get an order");
     db.OrderHeader
       .findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }] })
-      .then(function (orderList) {
+      .then(orderList => {
         res.json(orderList);
       }).catch(function (error) {
         console.log(error);
@@ -72,7 +72,7 @@ module.exports = function (app) {
   app.post("/api/orders", function (req, res) {
     console.log("Create an order");
     db.OrderHeader.create(req.body, { include: [db.OrderDetail] })
-      .then(function (createdOrder) {
+      .then(createdOrder => {
         res.status(200).send(createdOrder);
       }).catch(function (error) {
         console.log(error);
@@ -84,7 +84,7 @@ module.exports = function (app) {
   app.delete("/api/orders/:id", function (req, res) {
     console.log("Delete an order");
     db.OrderHeader.destroy({ where: { id: req.params.id } })
-      .then(function (affectedCount) {
+      .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
         console.log(error);
@@ -96,7 +96,7 @@ module.exports = function (app) {
   app.put("/api/orders", function (req, res) {
     console.log("Updates an order status");
     db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.params.id } })
-      .then(function (affectedCount) {
+      .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
         console.log(error);

@@ -6,7 +6,7 @@ module.exports = function (app) {
   app.get("/api/users", function (req, res) {
     console.log("Get All Users");
     db.User.findAll({})
-      .then(function (userList) {
+      .then(userList => {
         res.json(userList);
       })
       .catch(function (error) {
@@ -18,10 +18,10 @@ module.exports = function (app) {
 
   //Get users by role
   app.get("/api/users/:role", function (req, res) {
-    console.log("Get Users by Role Type");
+    console.log("Get Users by Role Type " + req.params.role);
     db.User.findAll({ include: [{ model: db.UserRole, where: { user_role_name: req.params.role } }] })
-      .then(function (userList) {
-        res.json(userList);
+      .then(userList => {
+        res.render("customerDashboard", { layout: 'buyer', userList: userList, productList: {} });
       })
       .catch(function (error) {
         console.log(error);
