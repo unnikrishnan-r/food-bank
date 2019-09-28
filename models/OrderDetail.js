@@ -24,7 +24,7 @@ module.exports = function (sequelize, DataTypes) {
 
 	OrderDetail.associate = function (models) {
 		models.OrderDetail.belongsTo(models.OrderHeader, { foreignKey: { name: 'order_id', allowNull: false } });
-		//models.OrderDetail.hasOne(models.ProductCatalog, { foreignKey: { name: 'id', allowNull: false } });
+		models.OrderDetail.belongsTo(models.ProductCatalog, { foreignKey: { name: 'product_id', allowNull: false } });
 	}
 
 	return OrderDetail;

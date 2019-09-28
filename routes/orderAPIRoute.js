@@ -1,11 +1,10 @@
 var db = require("../models");
-var User = db.User;
 
 module.exports = function (app) {
     // Get all orders
     app.get("/api/orders", function (req, res) {
         console.log("Get All Orders");
-        db.OrderHeader.findAll({ include: [{ model: User, as: 'Buyer' }, { model: User, as: 'Vendor' }] })
+        db.OrderHeader.findAll({ include: [{ model: db.User, as: 'Buyer' }, { model: db.User, as: 'Vendor' }] })
             .then(function (orderList) {
                 res.json(orderList);
             }).catch(function (error) {
@@ -17,7 +16,7 @@ module.exports = function (app) {
     // Get an order with it's order details and user info
     app.get("/api/orders/:id", function (req, res) {
         console.log("Get an order and order details");
-        db.OrderHeader.findAll({ where: { id: req.params.id }, include: [db.OrderDetail, { model: User, as: 'Buyer' }, { model: User, as: 'Vendor' }] })
+        db.OrderHeader.findAll({ where: { id: req.params.id }, include: [{ model: db.OrderDetail, include: [db.ProductCatalog] }, { model: db.User, as: 'Buyer' }, { model: db.User, as: 'Vendor' }] })
             .then(function (orderList) {
                 res.json(orderList);
             }).catch(function (error) {
@@ -26,11 +25,24 @@ module.exports = function (app) {
             });
     });
 
-    // Get user's order
-    app.get("/api/orders/user/:id", function (req, res) {
-        console.log("Get an order and order details");
+    // Get buyer's order
+    app.get("/api/orders/buyer/:id", function (req, res) {
+        console.log("Get an order");
         db.OrderHeader
             .findAll({ include: [{ model: db.User, as: 'Buyer', where: { id: req.params.id } }] })
+            .then(function (orderList) {
+                res.json(orderList);
+            }).catch(function (error) {
+                console.log(error);
+                res.sendStatus(500);
+            });
+    });
+
+    // Get vendor's order
+    app.get("/api/orders/vendor/:id", function (req, res) {
+        console.log("Get an order");
+        db.OrderHeader
+            .findAll({ include: [{ model: db.User, as: 'Vendor', where: { id: req.params.id } }] })
             .then(function (orderList) {
                 res.json(orderList);
             }).catch(function (error) {
