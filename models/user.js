@@ -23,11 +23,11 @@ module.exports = function(sequelize, DataTypes) {
 			allowNull: true
 		},
 		user_addr_1: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(100),
 			allowNull: true
 		},
 		user_addr_2: {
-			type: DataTypes.STRING(45),
+			type: DataTypes.STRING(100),
 			allowNull: true
 		},
 		user_addr_city: {

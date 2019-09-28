@@ -17,7 +17,8 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		product_perishable: {
 			type: DataTypes.INTEGER(4),
-			allowNull: false
+			allowNull: false,
+			defaultValue: 0
 		},
 		product_original_qty: {
 			type: DataTypes.INTEGER(11),
