@@ -19,16 +19,17 @@ app.engine(
     defaultLayout: "main"
   })
 );
+
 app.set("view engine", "handlebars");
 
 // Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+require("./routes/orderAPIRoute")(app);
 
 var syncOptions = { force: false };
 
 console.log(syncOptions);
-
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
