@@ -31,6 +31,7 @@ CREATE TABLE `ProductCatalog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `product_name` varchar(45) NOT NULL,
   `product_description` varchar(200) DEFAULT NULL,
+  `product_img` varchar(500) DEFAULT NULL,
   `product_expiry_date` date NOT NULL DEFAULT '9999-12-31',
   `product_perishable` tinyint(4) NOT NULL,
   `product_original_qty` int(11) NOT NULL,
