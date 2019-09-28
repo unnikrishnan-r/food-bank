@@ -22,7 +22,7 @@ module.exports = function (app) {
     console.log("Get Users by Role Type " + req.params.role);
     db.User.findAll({ include: [{ model: db.UserRole, where: { user_role_name: req.params.role } }] })
       .then(function (userList) {
-        res.render("customerDashboard", { userList: userList, productList: {} });
+        res.render("customerDashboard", { layout: "buyer", userList: userList, productList: {} });
       })
       .catch(function (error) {
         console.log(error);
