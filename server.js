@@ -29,7 +29,8 @@ require("./routes/htmlRoutes")(app);
 
 
 console.clear();
-var syncOptions = process.env.SYNC_MODEL || false;
+var syncOptions = {};
+syncOptions.force = process.env.SYNC_MODEL === "true" ? true : false;
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelizeConnection.sync(syncOptions).then(function () {
