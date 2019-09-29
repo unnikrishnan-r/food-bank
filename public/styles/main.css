@@ -1,0 +1,31 @@
+.navbar{
+    background: #4FA47D;
+}
+
+.nav-link, .navbar-brand{
+    color: #f4f4f4; cursor: pointer;
+}
+
+.navlink{
+    margin-right: 1em !important;
+}
+
+.navlink:hover{
+    background: #f4f4f4;
+    color: #4FA47D;
+}
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
+
+.navbar-toggler{
+    background: #fff !important;
+}
+
+.header{
+    background-image: url("../img/hero.gif");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
