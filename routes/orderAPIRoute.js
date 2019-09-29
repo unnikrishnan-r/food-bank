@@ -44,14 +44,18 @@ module.exports = function (app) {
       });
   });
 
-  // Get vendor's order
+  // Get vendor's order - Input is Vendor's Id
+  //Output is Order Header details + Buyer details
   app.get("/api/orders/vendor/:id", function (req, res) {
-    console.log("Get an order");
+    console.log("Get All orders for a Vendor");
     db.OrderHeader
-      .findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }] })
-      .then(orderList => {
-        res.json(orderList);
-      }).catch(function (error) {
+    .findAll({ where : {order_supplier_id: req.params.id}
+      ,include: [{ model: db.User, as: "Buyer", 
+      where: { id:Sequelize.col('OrderHeader.order_user_id')} }] 
+      })
+    .then(orderList => {
+      res.render("supplierOrderHistory" , {order: orderList})
+    }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
       });
