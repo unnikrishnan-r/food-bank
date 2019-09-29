@@ -1,0 +1,21 @@
+<table class="ordertable">
+    <thead>
+        <th>Order Id</th>
+        <th>Supplier</th>
+        <th>Order Status</th>
+        <th>Item Count</th>
+        <th>Order Created Date</th>
+
+    </thead>
+    {{#each order}}
+    <tr>
+        <td class="orderColumn orderID">{{id}} </td>
+        <td class="orderColumn supplierId">{{Vendor.user_name}}</td>
+        <td class="orderColumn orderStatus">{{order_status}}</td>
+        <td class="orderColumn orderItemCount">{{order_item_count}}</td>
+        <td class="orderColumn orderDate">{{createdAt}}</td>
+        <td class="orderColumn orderDetailsLink" id={{id}}><a href="#">Details</a></td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>

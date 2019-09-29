@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 var db = require("../models");
+var Sequelize = require("sequelize");
 
 module.exports = function (app) {
   // Get all orders
@@ -26,13 +27,17 @@ module.exports = function (app) {
       });
   });
 
-  // Get buyer's order
+  // Get buyer's order - Input is buyer's Id. 
+  //Output is Order Header details + Vendor details
   app.get("/api/orders/buyer/:id", function (req, res) {
-    console.log("Get an order");
+    console.log("Get All orders for a customer");
     db.OrderHeader
-      .findAll({ include: [{ model: db.User, as: "Buyer", where: { id: req.params.id } }] })
+      .findAll({ where : {order_user_id: req.params.id}
+        ,include: [{ model: db.User, as: "Vendor", 
+        where: { id:Sequelize.col('OrderHeader.order_supplier_id')} }] 
+        })
       .then(orderList => {
-        res.json(orderList);
+        res.render("customerOrderHistory" , {order: orderList})
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
