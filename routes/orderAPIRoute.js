@@ -49,7 +49,7 @@ module.exports = function (app) {
   app.get("/api/orders/vendor/:id", function (req, res) {
     console.log("Get All orders for a Vendor");
     db.OrderHeader
-    .findAll({ where : {order_supplier_id: req.params.id}
+    .findAll({ where : {order_supplier_id: req.params.id, order_status: "Open"}
       ,include: [{ model: db.User, as: "Buyer", 
       where: { id:Sequelize.col('OrderHeader.order_user_id')} }] 
       })
