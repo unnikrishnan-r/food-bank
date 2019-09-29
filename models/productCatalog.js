@@ -46,8 +46,8 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     }
   }, {
-      tableName: "ProductCatalog"
-    });
+    tableName: "ProductCatalog"
+  });
 
   ProductCatalog.associate = function (models) {
     models.ProductCatalog.belongsTo(models.User, { as: "Vendor", foreignKey: { name: "supplier_id", allowNull: false } });
