@@ -60,7 +60,7 @@
 }
 .description hr{
     max-width: 20%;
-    border: 1px solid #ccc;
+    border: 0.5px solid #ccc;
 }
 
 .description button{
@@ -69,3 +69,34 @@
     color: #fff;
 }
 
+.main-feature{
+    margin: 4em 0;
+    padding: 1em;
+    position: relative;
+}
+.main-feature h1{
+    color: #4FA47D;
+    margin: 2em;
+}
+
+.main-feature img{
+    height: auto;
+    width: auto;
+}
+.main-feature span{
+    display: block;
+    color: #888;
+    position: absolute;
+    left:115px;
+}
+.main-feature .desc{
+    padding: 2em;
+    border-left: 4px solid #10828c;
+}
+.main-feature .desc h3{
+    color: #10828c;
+}
+.about .desc p{
+    line-height:2;
+    color: #888;
+}
