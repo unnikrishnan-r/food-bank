@@ -29,3 +29,43 @@
     background-size: cover;
     background-position: center;
 }
+
+.overlay{
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.29);
+}
+
+.description{
+    position: absolute;
+    top:30%;
+    margin: auto;
+    padding: 2em;
+    text-shadow: 2px 2px #000000;
+}
+
+.description h1{
+    color: #fff;
+    font-size: 50px;
+}
+.description p{
+    color: #fff;
+    font-size: 20px;
+    width: 75%;
+    line-height: 1.5;
+    margin: auto;
+}
+.description hr{
+    max-width: 20%;
+    border: 1px solid #ccc;
+}
+
+.description button{
+    border:1px solid #4FA47D;
+    background: #4FA47D;
+    color: #fff;
+}
+
