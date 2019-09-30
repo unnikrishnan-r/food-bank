@@ -22,6 +22,10 @@ $(document).ready(function () {
 
   today = yyyy + "/" + mm + "/" + dd;
 
+  function expiryDateToggle() {
+
+  }
+
   $("#add-product-btn").on("click", function (event) {
     event.preventDefault();
 
