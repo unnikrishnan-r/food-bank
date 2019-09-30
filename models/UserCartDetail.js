@@ -5,7 +5,6 @@ module.exports = function (sequelize, DataTypes) {
     cart_id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
-      primaryKey: true,
       references: {
         model: "UserCartHeader",
         key: "id"
