@@ -27,20 +27,44 @@ INSERT INTO `foodbank_db`.`User`
 `user_name`,
 `user_password`,
 `user_role_id`,
+`user_addr_1`,
+`user_addr_city`,
+`user_addr_province`,
+`user_addr_postal_code`,
 `createdAt`,
 `updatedAt`)
 VALUES
-("Walmart", "abcd", 1,now(), now());
+("Walmart",
+ "abcd", 
+ 1,
+ "800 Matheson Blvd W",
+ "Mississauga",
+"Ontario",
+"L5V 2N6",
+ now(), 
+ now());
 
 INSERT INTO `foodbank_db`.`User`
 (
 `user_name`,
 `user_password`,
 `user_role_id`,
+`user_addr_1`,
+`user_addr_city`,
+`user_addr_province`,
+`user_addr_postal_code`,
 `createdAt`,
 `updatedAt`)
 VALUES
-("Costco", "abcd", 1,now(), now());
+("Costco", 
+"abcd", 
+1,
+"5900 Rodeo Dr",
+"Mississauga",
+"Ontario",
+"L5R 3S9",
+now(), 
+now());
 
 INSERT INTO `foodbank_db`.`User`
 (
@@ -184,14 +208,11 @@ INSERT INTO `foodbank_db`.`OrderHeader`
 ,order_status
 ,createdAt
 ,updatedAt)
-VALUES (
-2,
-1,
-1,
-'Open',
-now(),
-now()
-);
+VALUES 
+(3,1,1,'Open',now(),now()),
+(3,1,2,'Open',now(),now()),
+(4,1,3,'Open',now(),now());;
+;
 
 INSERT INTO `foodbank_db`.`OrderDetail`
 (
@@ -201,11 +222,12 @@ INSERT INTO `foodbank_db`.`OrderDetail`
     createdAt,
     updatedAt
 )
-VALUES (
-	1,
-    1,
-    1,
-    now(),
-    now()
-);
+VALUES 
+(1,1,1,now(),now()),
+(2,1,3,now(), now()),
+(2,2,3,now(), now()),
+(3,1,3,now(), now()),
+(3,2,3,now(), now()),
+(3,3,3,now(), now())
+;
 

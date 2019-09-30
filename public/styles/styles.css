@@ -1,3 +1,17 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+/*Style used for table in Order History */
+table {
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid lightgrey;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 2px 4px;
+}

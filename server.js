@@ -1,7 +1,6 @@
 require("dotenv").config();
 var express = require("express");
 var exphbs = require("express-handlebars");
-
 var db = require("./models");
 
 var app = express();
@@ -24,19 +23,14 @@ app.set("view engine", "handlebars");
 
 // Routes
 require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
 require("./routes/orderAPIRoute")(app);
+require("./routes/userAPIRoute")(app);
+require("./routes/htmlRoutes")(app);
 
-var syncOptions = { force: false };
 
-console.log(syncOptions);
-
-// If running a test, set syncOptions.force to true
-// clearing the `testdb`
-if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-  console.log("Detected DEV/TEST env, force syncing database");
-  syncOptions.force = true;
-}
+console.clear();
+var syncOptions = {};
+syncOptions.force = process.env.SYNC_MODEL === "true" ? true : false;
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelizeConnection.sync(syncOptions).then(function () {
