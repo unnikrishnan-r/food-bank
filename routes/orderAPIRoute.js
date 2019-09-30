@@ -81,9 +81,10 @@ module.exports = function (app) {
   });
 
   // Delete an order using id
-  app.delete("/api/orders/:id", function (req, res) {
+  // Id is in the body for security purposes
+  app.delete("/api/orders", function (req, res) {
     console.log("Delete an order");
-    db.OrderHeader.destroy({ where: { id: req.params.id } })
+    db.OrderHeader.destroy({ where: { id: req.body.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
@@ -97,7 +98,7 @@ module.exports = function (app) {
     console.log("Updates an order status");
     db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.params.id } })
       .then(affectedCount => {
-        res.status(200).send(affectedCount + " deleted");
+        res.status(200).send(affectedCount + " updated");
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
