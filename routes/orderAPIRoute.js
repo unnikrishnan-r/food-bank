@@ -32,12 +32,15 @@ module.exports = function (app) {
   app.get("/api/orders/buyer/:id", function (req, res) {
     console.log("Get All orders for a customer");
     db.OrderHeader
-      .findAll({ where : {order_user_id: req.params.id}
-        ,include: [{ model: db.User, as: "Vendor", 
-        where: { id:Sequelize.col('OrderHeader.order_supplier_id')} }] 
-        })
+      .findAll({
+        where: { order_user_id: req.params.id }
+        , include: [{
+          model: db.User, as: "Vendor",
+          where: { id: Sequelize.col('OrderHeader.order_supplier_id') }
+        }]
+      })
       .then(orderList => {
-        res.render("customerOrderHistory" , {order: orderList})
+        res.render("customerOrderHistory", { order: orderList })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -49,13 +52,16 @@ module.exports = function (app) {
   app.get("/api/orders/vendor/:id", function (req, res) {
     console.log("Get All orders for a Vendor");
     db.OrderHeader
-    .findAll({ where : {order_supplier_id: req.params.id, order_status: "Open"}
-      ,include: [{ model: db.User, as: "Buyer", 
-      where: { id:Sequelize.col('OrderHeader.order_user_id')} }] 
+      .findAll({
+        where: { order_supplier_id: req.params.id, order_status: "Open" }
+        , include: [{
+          model: db.User, as: "Buyer",
+          where: { id: Sequelize.col('OrderHeader.order_user_id') }
+        }]
       })
-    .then(orderList => {
-      res.render("supplierOrderHistory" , {order: orderList})
-    }).catch(function (error) {
+      .then(orderList => {
+        res.render("supplierOrderHistory", { order: orderList })
+      }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
       });
@@ -90,10 +96,9 @@ module.exports = function (app) {
   });
 
   // Delete an order using id
-  // Id is in the body for security purposes
-  app.delete("/api/orders", function (req, res) {
+  app.delete("/api/orders/:id", function (req, res) {
     console.log("Delete an order");
-    db.OrderHeader.destroy({ where: { id: req.body.id } })
+    db.OrderHeader.destroy({ where: { id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
@@ -103,7 +108,7 @@ module.exports = function (app) {
   });
 
   // Updates an order status
-  app.put("/api/orders", function (req, res) {
+  app.put("/api/orders/:id", function (req, res) {
     console.log("Updates an order status");
     db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.params.id } })
       .then(affectedCount => {
