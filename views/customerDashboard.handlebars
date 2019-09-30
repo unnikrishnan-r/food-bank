@@ -14,12 +14,15 @@
         <img src="{{product_img}}"><br>
         {{product_name}} <br>
         {{product_description}} <br>
-        {{product_expiry_date}} <br>
+        Expiry Date: {{product_expiry_date}} <br>
+        Available: {{product_current_qty}} <br>
         Perishable: {{#if product_perishable}}Y{{else}}N{{/if}}<br>
 
-        <form>
-            <input type="text" id="quantity">
-            <button type="button" data-id="{{id}}" class="place-order">Place Order</button>
+        <form class="form-inline">
+            <label class="sr-only" for="qty_input">Quantity</label>
+            <input type="text" id="qty_input" size="4" maxlength="4" placeholder="Qty" class="form-control mb-2 mr-2">
+            <button type="button" data-product-id="{{id}}" data-vendor-id="{{Vendor.id}}" class="mb-2 place-order">Place
+                Order</button>
         </form>
     </li>
 </ul>

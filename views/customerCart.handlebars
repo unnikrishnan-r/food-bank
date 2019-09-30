@@ -6,12 +6,16 @@
             <th>Quantity</th>
             <th></th>
         </thead>
-        {{#each UserCartDetail}}
+        {{#each UserCartDetails}}
         <tr>
             <td>{{ProductCatalog.product_name}} </td>
             <td>{{ProductCatalog.product_description}} </td>
-            <td><input type="text" id="quantity"></td>
-            <td></td>
+            <td id="row-{{id}}"><input type="text" id="qty_input" size="4" maxlength="4" placeholder="Qty"
+                    class="form-control mb-2 mr-2" value="{{quantity}}"></td>
+            <td>
+                <button type="button" data-cart-detail-id="{{id}}" class="update">Update</button>
+                <button type="button" data-cart-detail-id="{{id}}" class="delete">Delete</button>
+            </td>
         </tr>
         {{/each}}
         </tbody>
