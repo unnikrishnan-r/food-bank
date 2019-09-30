@@ -3,9 +3,9 @@ var db = require("../models");
 
 module.exports = function (app) {
   // Get cart
-  app.get("/api/cart/user", function (req, res) {
+  app.get("/api/cart/user/:id", function (req, res) {
     console.log("Get Cart");
-    db.UserCartHeader.findAll({ where: { cart_owner_id: req.body.id }, include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }] })
+    db.UserCartHeader.findAll({ where: { cart_owner_id: req.params.id }, include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }] })
       .then(cart => {
         res.json(cart);
       }).catch(function (error) {

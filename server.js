@@ -25,6 +25,7 @@ app.set("view engine", "handlebars");
 require("./routes/apiRoutes")(app);
 require("./routes/orderAPIRoute")(app);
 require("./routes/userAPIRoute")(app);
+require("./routes/userCartAPIRoute")(app);
 require("./routes/htmlRoutes")(app);
 
 
