@@ -208,14 +208,11 @@ INSERT INTO `foodbank_db`.`OrderHeader`
 ,order_status
 ,createdAt
 ,updatedAt)
-VALUES (
-2,
-1,
-1,
-'Open',
-now(),
-now()
-);
+VALUES 
+(3,1,1,'Open',now(),now()),
+(3,1,2,'Open',now(),now()),
+(4,1,3,'Open',now(),now());;
+;
 
 INSERT INTO `foodbank_db`.`OrderDetail`
 (
@@ -225,11 +222,12 @@ INSERT INTO `foodbank_db`.`OrderDetail`
     createdAt,
     updatedAt
 )
-VALUES (
-	1,
-    1,
-    1,
-    now(),
-    now()
-);
+VALUES 
+(1,1,1,now(),now()),
+(2,1,3,now(), now()),
+(2,2,3,now(), now()),
+(3,1,3,now(), now()),
+(3,2,3,now(), now()),
+(3,3,3,now(), now())
+;
 
