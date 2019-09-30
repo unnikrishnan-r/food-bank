@@ -1,21 +1,19 @@
-<table class="ordertable">
-    <thead>
-        <th>Order Id</th>
-        <th>Supplier</th>
-        <th>Order Status</th>
-        <th>Item Count</th>
-        <th>Order Created Date</th>
-
-    </thead>
-    {{#each order}}
-    <tr>
-        <td class="orderColumn orderID">{{id}} </td>
-        <td class="orderColumn supplierId">{{Vendor.user_name}}</td>
-        <td class="orderColumn orderStatus">{{order_status}}</td>
-        <td class="orderColumn orderItemCount">{{order_item_count}}</td>
-        <td class="orderColumn orderDate">{{createdAt}}</td>
-        <td class="orderColumn orderDetailsLink" id={{id}}><a href="#">Details</a></td>
-    </tr>
-    {{/each}}
-    </tbody>
-</table>
+<form>
+    <table>
+        <thead>
+            <th>Product</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th></th>
+        </thead>
+        {{#each UserCartDetail}}
+        <tr>
+            <td>{{ProductCatalog.product_name}} </td>
+            <td>{{ProductCatalog.product_description}} </td>
+            <td><input type="text" id="quantity"></td>
+            <td></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</form>

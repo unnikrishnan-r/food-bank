@@ -50,9 +50,9 @@ module.exports = function (app) {
   });
 
   // Updates a cart item
-  app.put("/api/cart/item", function (req, res) {
+  app.put("/api/cart/item/:id", function (req, res) {
     console.log("Updates a cart item quantity");
-    db.UserCartDetail.update({ quantity: req.body.quantity }, { where: { id: req.body.id } })
+    db.UserCartDetail.update({ quantity: req.body.quantity }, { where: { id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " updated");
       }).catch(function (error) {
@@ -62,9 +62,9 @@ module.exports = function (app) {
   });
 
   // Delete a cart item
-  app.delete("/api/cart/item", function (req, res) {
+  app.delete("/api/cart/item/:id", function (req, res) {
     console.log("Delete a cart");
-    db.UserCartDetail.destroy({ where: { id: req.body.id } })
+    db.UserCartDetail.destroy({ where: { id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
@@ -74,9 +74,9 @@ module.exports = function (app) {
   });
 
   // Delete a cart using id
-  app.delete("/api/cart/user", function (req, res) {
+  app.delete("/api/cart/user/:id", function (req, res) {
     console.log("Delete a cart");
-    db.UserCartHeader.destroy({ where: { id: req.body.id } })
+    db.UserCartHeader.destroy({ where: { cart_owner_id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
