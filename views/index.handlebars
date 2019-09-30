@@ -1,25 +1,22 @@
 {{!-- navbar --}}
 <nav class="navbar navbar-expand-lg fixed-top">
-  <a href="#" class="navbar-brand">Home/Logo</a>
+  <a href="#" class="navbar-brand">Robin Hood</a>
 
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse" id="navbarContent">
     <ul class="navbar-nav mr-4">
       <li class="nav-item">
-        <a href="#" class="nav-link" data-value="features">Features</a>
+        <a class="nav-link" data-value="feature" href="#">Features</a>
       </li>
       <li class="nav-item">
         <a href="#" class="nav-link" data-value="about">About</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link" data-value="contact">Contact</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link" data-value="login">Login</a>
+        <a href="/login" class="nav-link">Login</a>
       </li>
 
     </ul>
@@ -37,7 +34,8 @@
             consequuntur ad
             numquam necessitatibus!</p>
           <hr>
-          <button class="btn btn-outline-secondary btn-lg">Learn More</button>
+          <a href="#" class="nav-link" data-value="feature"><button class="btn btn-outline-secondary btn-lg">Learn
+              More</button></a>
         </h1>
       </div>
     </div>
@@ -45,28 +43,73 @@
 </header>
 
 {{!-- main feature --}}
-<div class="row main-feature">
-  <div class="col-lg-4 col-md-4 col-sm-12">
+<div class="row main-feature" id="feature">
+  <div class="col-lg-6 col-md-6 col-sm-12">
     <img src="./img/giveBread.jpg" alt="" class="img-fluid">
   </div>
-  <div class="col-lg-8 col-md-8 col-sm-12 desc">
-    <h3>Feature</h3>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus aliquam inventore aliquid sed doloribus debitis,
-      sit quibusdam explicabo aperiam saepe, id praesentium! Esse, facilis, nihil doloribus architecto error hic sunt
-      quas nam voluptatibus numquam rem aspernatur ad autem placeat dolore, aperiam consectetur non totam labore.
-      Necessitatibus, ea. Non, dicta repellat.</p>
+  <div class="col-lg-6 col-md-6 col-sm-12 desc">
+    <div class="row">
+      <h3>Feature</h3>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex illum iusto pariatur labore. </p>
+    </div>
+    <hr>
+    <div class="row">
+      <h3>Feature</h3>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex illum iusto pariatur labore.</p>
+    </div>
+    <hr>
+    <div class="row">
+      <h3>Feature</h3>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex illum iusto pariatur labore.</p>
+    </div>
   </div>
 </div>
 
+{{!-- screenshots --}}
+<div class="screenshots" id="about">
+  <h1 class="text-center">App Screenshots</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <img src="https://via.placeholder.com/640x360.png" alt="" class="img-fluid">
+        <div class="desc text-center">Dashboard</div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <img src="https://via.placeholder.com/640x360.png" alt="" class="img-fluid">
+        <div class="desc text-center">Order</div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <img src="https://via.placeholder.com/640x360.png" alt="" class="img-fluid">
+        <div class="desc text-center">Checkout</div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<footer class="page-footer">
+  <h5 class="footer-title text-center">Get the Code</h5>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-links text-center">
+          <a href="https://github.com/unnikrishnan-r/food-bank">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://limitless-bayou-30453.herokuapp.com/">
+            Heroku
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-{{!-- <a href="/login">
-  <h2>Login</h2>
-</a>
-
-<a href="/addProductForm">
-  <h2>add product</h2>
-</a> --}}
+  <div class="footer-copyright text-center">
+    © Copyright 2019 - 2020 | Robin Hood | All Rights Reserved
+  </div>
+</footer>
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
