@@ -28,14 +28,9 @@ require("./routes/userAPIRoute")(app);
 require("./routes/htmlRoutes")(app); //Should be last always because of the "*" route = 404 error page
 
 
-var syncOptions = { force: false };
-
-// If running a test, set syncOptions.force to true
-// clearing the `testdb`
-if (process.env.NODE_ENV === "test" || process.env.NODE_ENV === "development") {
-  console.log("Detected DEV/TEST env, force syncing database");
-  syncOptions.force = true;
-}
+console.clear();
+var syncOptions = {};
+syncOptions.force = process.env.SYNC_MODEL === "true" ? true : false;
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelizeConnection.sync(syncOptions).then(function () {
