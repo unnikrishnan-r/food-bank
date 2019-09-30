@@ -2,7 +2,7 @@
 var db = require("../models");
 var Sequelize = require("sequelize");
 var moment = require("moment");
-
+// var helpers = require('handlebars-helpers')();
 
 module.exports = function (app) {
   // Get all orders
@@ -45,6 +45,11 @@ module.exports = function (app) {
         where: { id:Sequelize.col('OrderHeader.order_supplier_id')} }] 
         })
       .then(orderList => {
+        orderList = orderList.map(order => {
+          const orderObj = order.toJSON(); 
+          orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          return orderObj;
+        })
         res.render("customerOrderHistory" , {order: orderList})
       }).catch(function (error) {
         console.log(error);
@@ -62,6 +67,11 @@ module.exports = function (app) {
       where: { id:Sequelize.col('OrderHeader.order_user_id')} }] 
       })
     .then(orderList => {
+      orderList = orderList.map(order => {
+        const orderObj = order.toJSON(); 
+        orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+        return orderObj;
+      })
       res.render("supplierOrderHistory" , {order: orderList})
     }).catch(function (error) {
         console.log(error);
