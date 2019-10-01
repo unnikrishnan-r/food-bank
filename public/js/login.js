@@ -21,14 +21,10 @@ $(document).ready(function() {
         console.log("logged in as ", user.userRole, user.userId);
         switch (user.userRole) {
         case "Vendor":
-            $.ajax(`/api/products/vendor/${user.userId}`, {
-              type: "GET"
-          }).then(data => console.log(data));
+          location.href = `/api/products/vendor/${user.userId}`;
           break;
         case "Buyer":
-          $.ajax(`/api/products/buyer/${user.userId}`, {
-            type: "GET"
-          });
+          location.href = `/api/products/buyer/${user.userId}`;
           break;
 
         default:
