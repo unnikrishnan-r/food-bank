@@ -23,7 +23,11 @@ module.exports = function (app) {
         /*productList.map(product => {
           product.product_expiry_date = moment(product.product_expiry_date, "YYYY-MM-DD").format("MM/DD/YYYY");
         });*/
+
         res.render("customerDashboard", { layout: "buyer", userList: {}, productList: productList });
+
+        //TODO: render correct view based on current logged in user's role
+        //res.render("vendorDashboard", { layout: "vendor", userList: {}, productList: productList });
       })
       .catch(error => {
         console.error(error);
