@@ -2,18 +2,37 @@
 
 $(document).ready(function () {
 
-  $(".place-order").on("click", function () {
-    var newCart = {
-      cart_owner_id: 1,
-      cart_status: "Open",
-      product_id: $(this).data("product-id"),
-      quantity: 1
-    };
+  $("#place-order").on("click", function () {
+    let elements = $(".selectOrder:checked");
 
-    $.post("/api/cart/user", newCart)
-      .then(results => {
-        console.log(results);
-      });
+    var newOrder = {
+      order_user_id: 1,
+      order_supplier_id: $(this).data("vendor-id"),
+      order_item_count: elements.length,
+      order_status: "Open",
+      OrderDetail: []
+    }
+
+    for (let element of elements) {
+      let productID = $(element).data("product-id");
+      let qtyInputID = "#qty_input_" + productID;
+      let quantity = $(qtyInputID).val();
+
+      var newOrderDetail = {
+        "product_id": productID,
+        "quantity": quantity
+      }
+
+      newOrder.OrderDetail.push(newOrderDetail);
+    }
+
+    $.post("/api/orders", newOrder)
+      .then(data => {
+        console.log(data);
+      })
+      .fail(function () {
+        console.log("Error");
+      })
   });
 
 });

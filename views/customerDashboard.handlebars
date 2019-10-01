@@ -1,29 +1,49 @@
-{{#each userList}}
 <ul>
+    {{#each userList}}
     <li>
         <a href="/api/products/vendor/{{id}}">{{user_name}}</a><br>
         {{user_addr_1}} {{user_addr_2}} <br>
         {{user_addr_city}}, {{user_addr_province}} {{user_addr_postal_code}}
     </li>
+    {{/each}}
 </ul>
-{{/each}}
 
-{{#each productList}}
-<ul>
-    <li>
-        <img src="{{product_img}}"><br>
-        {{product_name}} <br>
-        {{product_description}} <br>
-        Expiry Date: {{product_expiry_date}} <br>
-        Available: {{product_current_qty}} <br>
-        Perishable: {{#if product_perishable}}Y{{else}}N{{/if}}<br>
 
-        <form class="form-inline">
-            <label class="sr-only" for="qty_input">Quantity</label>
-            <input type="text" id="qty_input" size="4" maxlength="4" placeholder="Qty" class="form-control mb-2 mr-2">
-            <button type="button" data-product-id="{{id}}" data-vendor-id="{{Vendor.id}}" class="mb-2 place-order">Place
-                Order</button>
-        </form>
-    </li>
-</ul>
-{{/each}}
+{{~#if productList.length}}
+
+<button type="button" data-vendor-id="{{vendor.id}}" class="mb-2" id="place-order">Place
+    Order</button>
+<form>
+    <table class="w-75">
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Expiry Date</th>
+            <th>Available</th>
+            <th>Perishable</th>
+            <th>Order Quantity</th>
+        </tr>
+        {{#each productList}}
+        <tr>
+            <td class="selectCol"><input type="checkbox" id="select_input_{{id}}" data-product-id="{{id}}"
+                    class="selectOrder"></td>
+            <td class="w-25"><img src="{{product_img}}" class="img-fluid"></td>
+            <td>{{product_name}}</td>
+            <td>{{product_description}}</td>
+            <td>{{product_expiry_date}}</td>
+            <td>{{product_current_qty}}</td>
+            <td>{{#if product_perishable}}Y{{else}}N{{/if}}</td>
+            <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
+                    max="{{product_current_qty}}" placeholder="Qty">
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</form>
+
+{{/if}}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/customerDashboard.js"></script>

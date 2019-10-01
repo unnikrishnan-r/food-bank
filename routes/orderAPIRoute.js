@@ -86,13 +86,17 @@ module.exports = function (app) {
   */
   app.post("/api/orders", function (req, res) {
     console.log("Create an order");
-    db.OrderHeader.create(req.body, { include: [db.OrderDetail] })
-      .then(createdOrder => {
-        res.status(200).send(createdOrder);
-      }).catch(function (error) {
-        console.log(error);
-        res.sendStatus(400);
-      });
+    console.log(req.body);
+
+    db.sequelizeConnection.transaction(transaction => {
+      return db.OrderHeader.create(req.body, { transaction })
+        .then(createdOrder => {
+          res.status(200).send(createdOrder);
+        }).catch(function (error) {
+          console.log(error);
+          res.sendStatus(400);
+        });
+    });
   });
 
   // Delete an order using id

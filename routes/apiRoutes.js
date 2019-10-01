@@ -23,7 +23,17 @@ module.exports = function (app) {
         /*productList.map(product => {
           product.product_expiry_date = moment(product.product_expiry_date, "YYYY-MM-DD").format("MM/DD/YYYY");
         });*/
-        res.render("customerDashboard", { layout: "buyer", userList: {}, productList: productList });
+
+        var vendor;
+
+        if (productList.length > 0) {
+          vendor = productList[0].Vendor;
+        }
+        else {
+          vendor = { id: 0 }
+        }
+
+        res.render("customerDashboard", { layout: "buyer", userList: {}, productList: productList, vendor: vendor });
       })
       .catch(error => {
         console.error(error);
