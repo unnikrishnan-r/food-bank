@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 var db = require("../models");
 var Sequelize = require("sequelize");
+var moment = require("moment");
+// var helpers = require('handlebars-helpers')();
 
 module.exports = function (app) {
   // Get all orders
@@ -19,8 +21,17 @@ module.exports = function (app) {
   app.get("/api/orders/:id", function (req, res) {
     console.log("Get an order and order details");
     db.OrderHeader.findAll({ where: { id: req.params.id }, include: [{ model: db.OrderDetail, include: [db.ProductCatalog] }, { model: db.User, as: "Buyer" }, { model: db.User, as: "Vendor" }] })
-      .then(orderList => {
-        res.json(orderList);
+      .then(orderDetail => {
+        orderDetail = orderDetail.map(order => {
+          const orderObj = order.toJSON();
+          orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          orderObj.OrderDetails.forEach(orderedProduct => {
+            orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY")
+          });
+          return orderObj;
+        });
+        // res.json(orderDetail)
+        res.render("orderDetail", { order: orderDetail })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -40,6 +51,11 @@ module.exports = function (app) {
         }]
       })
       .then(orderList => {
+        orderList = orderList.map(order => {
+          const orderObj = order.toJSON();
+          orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          return orderObj;
+        })
         res.render("customerOrderHistory", { order: orderList })
       }).catch(function (error) {
         console.log(error);
@@ -60,6 +76,11 @@ module.exports = function (app) {
         }]
       })
       .then(orderList => {
+        orderList = orderList.map(order => {
+          const orderObj = order.toJSON();
+          orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          return orderObj;
+        })
         res.render("supplierOrderHistory", { order: orderList })
       }).catch(function (error) {
         console.log(error);

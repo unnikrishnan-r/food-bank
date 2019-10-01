@@ -1,0 +1,48 @@
+<table class="orderHeader">
+    <thead>
+        <th>Order Id</th>
+        <th>Supplier</th>
+        <th>Customer</th>
+        <th>Order Status</th>
+        <th>Item Count</th>
+        <th>Order Created Date</th>
+
+    </thead>
+
+    {{#each order}}
+    <tr>
+        <td class="orderHeaderColumn orderID">{{id}} </td>
+        <td class="orderHeaderColumn supplierName">{{Vendor.user_name}}</td>
+        <td class="orderHeaderColumn buyerName">{{Buyer.user_name}}</td>
+        <td class="orderHeaderColumn orderStatus">{{order_status}}</td>
+        <td class="orderHeaderColumn orderItemCount">{{order_item_count}}</td>
+        <td class="orderHeaderColumn orderDate">{{createdAt}}</td>
+    </tr>
+    {{/each}}
+</table>
+
+<br> <br>
+
+<table class="orderHeader">
+    <thead>
+        <th>Product Id</th>
+        <th>Product Name</th>
+        <th>Product Image</th>
+        <th>Order Quantity</th>
+        <th>Expiration Date</th>
+
+    </thead>
+    {{#each order}}
+
+    {{#each OrderDetails}}
+    <tr>
+        <td class="orderDetailColumn productId">{{product_id}} </td>
+        <td class="orderDetailColumn productName">{{ProductCatalog.product_name}} </td>
+        <td class="orderDetailColumn productImage"><img class="productImage" src="{{ProductCatalog.product_img}}"></td>
+        <td class="orderDetailColumn orderQuantity">{{quantity}} </td>
+        <td class="orderDetailColumn productExpiryDate">{{ProductCatalog.product_expiry_date}} </td>
+    </tr>
+    {{/each}}
+    {{/each}}
+
+</table>
