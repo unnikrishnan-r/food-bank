@@ -45,11 +45,17 @@ $(document).ready(function () {
       contentType: "application/json"
     })
       .then(data => {
-        console.log(data);
+        console.log($("#orderSubmitted"));
+        $("#orderSubmitted").modal();
+
       })
       .fail(function () {
         console.log("Error");
       });
   });
+
+  $('#orderSubmitted').on('hidden.bs.modal', function (e) {
+    location.reload();
+  })
 
 });

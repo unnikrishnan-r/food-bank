@@ -87,20 +87,14 @@ module.exports = function (app) {
   app.post("/api/orders", async function (req, res) {
     console.log("Create an order");
 
-    //Transaction not committed. Each order detail has it's own promise
-    return db.sequelizeConnection.transaction().then(transaction => {
+    db.OrderHeader.create(req.body)
+      .then(createdOrder => {
 
-      return db.OrderHeader.create(req.body, { transaction })
-        .then(createdOrder => {
-
-          req.body.OrderDetail.forEach(data => {
-
-            return db.OrderDetail.create({ order_id: createdOrder.id, product_id: data.product_id, quantity: data.product_id }, { transaction });
-          });
-
+        req.body.OrderDetail.forEach(data => {
+          db.OrderDetail.create({ order_id: createdOrder.id, product_id: data.product_id, quantity: data.quantity });
         });
-    })
-      .then(function (result) {
+
+      }).then(() => {
         res.sendStatus(200);
       })
       .catch(function (error) {
