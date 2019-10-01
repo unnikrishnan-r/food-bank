@@ -23,7 +23,7 @@ module.exports = function (app) {
     db.OrderHeader.findAll({ where: { id: req.params.id }, include: [{ model: db.OrderDetail, include: [db.ProductCatalog] }, { model: db.User, as: "Buyer" }, { model: db.User, as: "Vendor" }] })
       .then(orderDetail => {
         orderDetail = orderDetail.map(order => {
-          const orderObj = order.toJSON(); 
+          const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           orderObj.OrderDetails.forEach(orderedProduct => {
             orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY")
@@ -31,7 +31,7 @@ module.exports = function (app) {
           return orderObj;
         });
         // res.json(orderDetail)
-        res.render("orderDetail" , {order: orderDetail})
+        res.render("orderDetail", { order: orderDetail })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -43,17 +43,20 @@ module.exports = function (app) {
   app.get("/api/orders/buyer/:id", function (req, res) {
     console.log("Get All orders for a customer");
     db.OrderHeader
-      .findAll({ where : {order_user_id: req.params.id}
-        ,include: [{ model: db.User, as: "Vendor", 
-        where: { id:Sequelize.col('OrderHeader.order_supplier_id')} }] 
-        })
+      .findAll({
+        where: { order_user_id: req.params.id }
+        , include: [{
+          model: db.User, as: "Vendor",
+          where: { id: Sequelize.col('OrderHeader.order_supplier_id') }
+        }]
+      })
       .then(orderList => {
         orderList = orderList.map(order => {
-          const orderObj = order.toJSON(); 
+          const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
         })
-        res.render("customerOrderHistory" , {order: orderList})
+        res.render("customerOrderHistory", { order: orderList })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -65,18 +68,21 @@ module.exports = function (app) {
   app.get("/api/orders/vendor/:id", function (req, res) {
     console.log("Get All orders for a Vendor");
     db.OrderHeader
-    .findAll({ where : {order_supplier_id: req.params.id, order_status: "Open"}
-      ,include: [{ model: db.User, as: "Buyer", 
-      where: { id:Sequelize.col('OrderHeader.order_user_id')} }] 
+      .findAll({
+        where: { order_supplier_id: req.params.id, order_status: "Open" }
+        , include: [{
+          model: db.User, as: "Buyer",
+          where: { id: Sequelize.col('OrderHeader.order_user_id') }
+        }]
       })
-    .then(orderList => {
-      orderList = orderList.map(order => {
-        const orderObj = order.toJSON(); 
-        orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
-        return orderObj;
-      })
-      res.render("supplierOrderHistory" , {order: orderList})
-    }).catch(function (error) {
+      .then(orderList => {
+        orderList = orderList.map(order => {
+          const orderObj = order.toJSON();
+          orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          return orderObj;
+        })
+        res.render("supplierOrderHistory", { order: orderList })
+      }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
       });
@@ -99,15 +105,24 @@ module.exports = function (app) {
       }
 
   */
-  app.post("/api/orders", function (req, res) {
+  app.post("/api/orders", async function (req, res) {
     console.log("Create an order");
-    db.OrderHeader.create(req.body, { include: [db.OrderDetail] })
+
+    db.OrderHeader.create(req.body)
       .then(createdOrder => {
-        res.status(200).send(createdOrder);
-      }).catch(function (error) {
+
+        req.body.OrderDetail.forEach(data => {
+          db.OrderDetail.create({ order_id: createdOrder.id, product_id: data.product_id, quantity: data.quantity });
+        });
+
+      }).then(() => {
+        res.sendStatus(200);
+      })
+      .catch(function (error) {
         console.log(error);
         res.sendStatus(400);
       });
+
   });
 
   // Delete an order using id
@@ -123,11 +138,11 @@ module.exports = function (app) {
   });
 
   // Updates an order status
-  app.put("/api/orders", function (req, res) {
+  app.put("/api/orders/:id", function (req, res) {
     console.log("Updates an order status");
     db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.params.id } })
       .then(affectedCount => {
-        res.status(200).send(affectedCount + " deleted");
+        res.status(200).send(affectedCount + " updated");
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
