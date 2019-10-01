@@ -24,11 +24,9 @@
             <label for="productDesc">Product Description: </label>
             <input type="text" id="productDesc" name="productDesc">
         </div>
-
-        {{!-- date --}}
         <div class="form-group">
-            <label for="expiryDate">Expiry Date: </label>
-            <input type="date" id="expiryDate" name="expiryDate">
+            <label for="productImg">Product Image Link: </label>
+            <input type="text" id="productImg" name="productImg">
         </div>
 
         <div class="form-group">
@@ -36,6 +34,14 @@
             <input type="radio" name="perishable" value="1" checked> Yes<br>
             <input type="radio" name="perishable" value="0"> No
         </div>
+
+        {{!-- date --}}
+        <div class="form-group">
+            <label for="expiryDate">Expiry Date: </label>
+            <input type="date" id="expiryDate" name="expiryDate">
+        </div>
+
+
 
         <div class="form-group">
             <label for="originalQty">Quantity: </label>

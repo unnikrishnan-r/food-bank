@@ -1,18 +1,3 @@
-// `id` int(11) NOT NULL AUTO_INCREMENT,
-//   `product_name` varchar(45) NOT NULL,
-//   `product_description` varchar(200) DEFAULT NULL,
-//   `product_expiry_date` date NOT NULL DEFAULT '9999-12-31',
-//   `product_perishable` tinyint(4) NOT NULL,
-//   `product_original_qty` int(11) NOT NULL,
-//   `product_current_qty` int(11) NOT NULL DEFAULT '0',
-//   `supplier_id` int(11) NOT NULL,
-//   `product_posted_date` date NOT NULL,
-//   PRIMARY KEY (`id`),
-//   KEY `supplier_id_idx` (`supplier_id`),
-//   CONSTRAINT `supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `User` (`id`)
-
-
-
 $(document).ready(function () {
 
   var today = new Date();
@@ -22,8 +7,29 @@ $(document).ready(function () {
 
   today = yyyy + "/" + mm + "/" + dd;
 
+
+  //if item is perishable show expiry date
+  function expiryDateToggle() {
+    $("#expiryDate").prop("disabled", false);
+    $("input[type=radio]").click(function () {
+      if ($(this).prop("value") == 1) {
+        $("#expiryDate").prop("disabled", false);
+      } else {
+        $("#expiryDate").prop("disabled", true);
+      }
+    });
+  }
+  expiryDateToggle();
+
   $("#add-product-btn").on("click", function (event) {
     event.preventDefault();
+
+    //default date if not perishable
+    var expiryDate = $("#expiryDate").val();
+
+    if ($("[name=perishable]:checked").val().trim() === "0") {
+      expiryDate = "9999-12-31";
+    }
 
     var newProduct = {
       // eslint-disable-next-line camelcase
@@ -31,7 +37,9 @@ $(document).ready(function () {
       // eslint-disable-next-line camelcase
       product_description: $("#productDesc").val().trim(),
       // eslint-disable-next-line camelcase
-      product_expiry_date: $("#expiryDate").val(),
+      product_img: $("#productImg").val().trim(),
+      // eslint-disable-next-line camelcase
+      product_expiry_date: expiryDate,
       // eslint-disable-next-line camelcase
       product_perishable: $("[name=perishable]:checked").val().trim(),
       // eslint-disable-next-line camelcase
@@ -52,6 +60,7 @@ $(document).ready(function () {
       .then(
         function () {
           console.log("New Product Added" + newProduct);
+          location.reload();
         }
       );
   });
