@@ -25,6 +25,9 @@ module.exports = function (app) {
         orderDetail = orderDetail.map(order => {
           const orderObj = order.toJSON(); 
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          orderObj.OrderDetails.forEach(orderedProduct => {
+            orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY")
+          });
           return orderObj;
         });
         // res.json(orderDetail)
