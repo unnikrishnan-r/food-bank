@@ -11,9 +11,10 @@
 
 {{~#if productList.length}}
 
-<button type="button" data-vendor-id="{{vendor.id}}" class="mb-2" id="place-order">Place
-    Order</button>
-<form>
+<form id="orderForm">
+    <button type="submit" data-vendor-id="{{vendor.id}}" class="mb-2" id="place-order">Place
+        Order</button>
+
     <table class="w-75">
         <tr>
             <th></th>
@@ -32,11 +33,11 @@
             <td class="w-25"><img src="{{product_img}}" class="img-fluid"></td>
             <td>{{product_name}}</td>
             <td>{{product_description}}</td>
-            <td>{{product_expiry_date}}</td>
+            <td>{{#if product_perishable}}{{product_expiry_date}}{{/if}}</td>
             <td>{{product_current_qty}}</td>
             <td>{{#if product_perishable}}Y{{else}}N{{/if}}</td>
             <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
-                    max="{{product_current_qty}}" placeholder="Qty">
+                    max="{{product_current_qty}}">
             </td>
         </tr>
         {{/each}}

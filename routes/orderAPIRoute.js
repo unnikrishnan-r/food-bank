@@ -84,19 +84,30 @@ module.exports = function (app) {
       }
 
   */
-  app.post("/api/orders", function (req, res) {
+  app.post("/api/orders", async function (req, res) {
     console.log("Create an order");
-    console.log(req.body);
 
-    db.sequelizeConnection.transaction(transaction => {
+    //Transaction not committed. Each order detail has it's own promise
+    return db.sequelizeConnection.transaction().then(transaction => {
+
       return db.OrderHeader.create(req.body, { transaction })
         .then(createdOrder => {
-          res.status(200).send(createdOrder);
-        }).catch(function (error) {
-          console.log(error);
-          res.sendStatus(400);
+
+          req.body.OrderDetail.forEach(data => {
+
+            return db.OrderDetail.create({ order_id: createdOrder.id, product_id: data.product_id, quantity: data.product_id }, { transaction });
+          });
+
         });
-    });
+    })
+      .then(function (result) {
+        res.sendStatus(200);
+      })
+      .catch(function (error) {
+        console.log(error);
+        res.sendStatus(400);
+      });
+
   });
 
   // Delete an order using id
