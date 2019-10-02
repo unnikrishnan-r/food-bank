@@ -1,5 +1,7 @@
 <table class="ordertable">
     <thead>
+        <th></th>
+
         <th>Order Id</th>
         <th>Buyer Name</th>
         <th>Order Status</th>
@@ -9,6 +11,8 @@
     </thead>
     {{#each order}}
     <tr>
+        <td class="selectCol"><input type="checkbox" id="select_input_{{id}}" order-id="{{id}}"
+                class="selectOrder"></td>
         <td class="orderColumn orderID">{{id}} </td>
         <td class="orderColumn buyerName">{{Buyer.user_name}}</td>
         <td class="orderColumn orderStatus">{{order_status}}</td>
@@ -19,3 +23,26 @@
     {{/each}}
     </tbody>
 </table>
+
+<br><br>
+
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Change Order Status
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" data-value = "Open" href="#">Open</a>
+        <a class="dropdown-item" data-value = "Closed" href="#">Closed</a>
+        <a class="dropdown-item" data-value = "Cancelled" href="#">Cancelled</a>
+        <a class="dropdown-item" data-value = "Ready for Pickup"href="#">Ready for Pickup</a>
+    </div>
+</div>
+
+<br><br>
+
+<button type="submit" class="btn btn-success" id="save-changes">Save Changes</button>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/supplierOrderHistory.js"></script>
