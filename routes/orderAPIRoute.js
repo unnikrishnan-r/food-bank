@@ -131,6 +131,9 @@ module.exports = function (app) {
     console.log("Create an order");
 
     /*
+
+    SUM: https://www.woolha.com/tutorials/sequelize-aggregate-functions-sum-count-min-max-etc-examples
+
     https://github.com/sequelize/sequelize/issues/9770
     db.transaction((parent) => {
       return Sequelize.Promise.all([
