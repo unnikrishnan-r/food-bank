@@ -31,7 +31,9 @@ module.exports = function (app) {
           return orderObj;
         });
         // res.json(orderDetail)
-        res.render("orderDetail", { order: orderDetail })
+
+        //TODO: if statement based on user role to set layout used
+        res.render("orderDetail", { layout: "buyer", order: orderDetail })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -56,7 +58,7 @@ module.exports = function (app) {
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
         })
-        res.render("customerOrderHistory", { order: orderList })
+        res.render("customerOrderHistory", { layout: "buyer", order: orderList })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -81,7 +83,7 @@ module.exports = function (app) {
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
         })
-        res.render("supplierOrderHistory", { order: orderList })
+        res.render("supplierOrderHistory", { layout: "vendor", order: orderList })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
