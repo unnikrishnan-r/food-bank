@@ -53,6 +53,7 @@ module.exports = function (app) {
         });
 
         res.render("orderDetail", { layout: "vendor", order: orderDetail })
+      
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
