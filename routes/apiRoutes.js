@@ -20,14 +20,22 @@ module.exports = function (app) {
     console.log("Get All vendor products");
     db.ProductCatalog.findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }] })
       .then(productList => {
-        /*productList.map(product => {
-          product.product_expiry_date = moment(product.product_expiry_date, "YYYY-MM-DD").format("MM/DD/YYYY");
-        });*/
+        productList.map(product => {
+          const productObj = product.toJSON();
+          productObj.createdAt = moment(productObj.product_expiry_date).format("MM/DD/YYYY");
+          return productObj;
+        });
 
-        res.render("customerDashboard", { layout: "buyer", userList: {}, productList: productList });
+        var vendor;
 
-        //TODO: render correct view based on current logged in user's role
-        //res.render("vendorDashboard", { layout: "vendor", userList: {}, productList: productList });
+        if (productList.length > 0) {
+          vendor = productList[0].Vendor;
+        }
+        else {
+          vendor = { id: 0 }
+        }
+
+        res.render("customerDashboard", { layout: "buyer", userList: {}, productList: productList, vendor: vendor });
       })
       .catch(error => {
         console.error(error);

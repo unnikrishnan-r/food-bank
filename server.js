@@ -25,7 +25,8 @@ app.set("view engine", "handlebars");
 require("./routes/apiRoutes")(app);
 require("./routes/orderAPIRoute")(app);
 require("./routes/userAPIRoute")(app);
-require("./routes/htmlRoutes")(app);
+require("./routes/loginRoute")(app);
+require("./routes/htmlRoutes")(app); //Should be last always because of the "*" route = 404 error page
 
 
 console.clear();
