@@ -23,12 +23,12 @@ module.exports = function (app) {
     db.OrderHeader.findAll({ where: { id: req.params.id }, include: [{ model: db.OrderDetail, include: [db.ProductCatalog] }, { model: db.User, as: "Buyer" }, { model: db.User, as: "Vendor" }] })
       .then(orderDetail => {
         orderDetail = orderDetail.map(order => {
-          const orderObj = order.toJSON(); 
+          const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
         });
         // res.json(orderDetail)
-        res.render("orderDetail" , {order: orderDetail})
+        res.render("orderDetail", { order: orderDetail })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -40,17 +40,20 @@ module.exports = function (app) {
   app.get("/api/orders/buyer/:id", function (req, res) {
     console.log("Get All orders for a customer");
     db.OrderHeader
-      .findAll({ where : {order_user_id: req.params.id}
-        ,include: [{ model: db.User, as: "Vendor", 
-        where: { id:Sequelize.col('OrderHeader.order_supplier_id')} }] 
-        })
+      .findAll({
+        where: { order_user_id: req.params.id }
+        , include: [{
+          model: db.User, as: "Vendor",
+          where: { id: Sequelize.col('OrderHeader.order_supplier_id') }
+        }]
+      })
       .then(orderList => {
         orderList = orderList.map(order => {
-          const orderObj = order.toJSON(); 
+          const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
         })
-        res.render("customerOrderHistory" , {order: orderList})
+        res.render("customerOrderHistory", { layout: "buyer", order: orderList })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -62,18 +65,21 @@ module.exports = function (app) {
   app.get("/api/orders/vendor/:id", function (req, res) {
     console.log("Get All orders for a Vendor");
     db.OrderHeader
-    .findAll({ where : {order_supplier_id: req.params.id, order_status: "Open"}
-      ,include: [{ model: db.User, as: "Buyer", 
-      where: { id:Sequelize.col('OrderHeader.order_user_id')} }] 
+      .findAll({
+        where: { order_supplier_id: req.params.id, order_status: "Open" }
+        , include: [{
+          model: db.User, as: "Buyer",
+          where: { id: Sequelize.col('OrderHeader.order_user_id') }
+        }]
       })
-    .then(orderList => {
-      orderList = orderList.map(order => {
-        const orderObj = order.toJSON(); 
-        orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
-        return orderObj;
-      })
-      res.render("supplierOrderHistory" , {order: orderList})
-    }).catch(function (error) {
+      .then(orderList => {
+        orderList = orderList.map(order => {
+          const orderObj = order.toJSON();
+          orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          return orderObj;
+        })
+        res.render("supplierOrderHistory", { layout: "vendor", order: orderList })
+      }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
       });

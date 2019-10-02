@@ -4,11 +4,22 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/styles/vendor.css" media="screen" title="no title" charset="utf-8">
     <title>Vendor</title>
 </head>
 
 <body>
+
+    {{!-- My Products --}}
+    <a href="/api/products/vendor/1">My Products</a>
+
+    {{!-- add products form --}}
+    <a href="/addProductForm">Add Products</a>
+
+    {{!-- vendor open orders --}}
+    <a href="http://localhost:3000/api/orders/vendor/1">Orders</a>
     {{{body}}}
 </body>
 
