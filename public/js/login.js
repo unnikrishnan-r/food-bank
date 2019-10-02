@@ -24,7 +24,7 @@ $(document).ready(function() {
           location.href = `/api/products/vendor/${user.userId}`;
           break;
         case "Buyer":
-          location.href = `/api/products/buyer/${user.userId}`;
+          location.href = `/api/users/Vendor`;
           break;
 
         default:
