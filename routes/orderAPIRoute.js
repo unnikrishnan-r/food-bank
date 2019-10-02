@@ -31,7 +31,7 @@ module.exports = function (app) {
           return orderObj;
         });
 
-        res.render("orderDetail", { layout: "buyer", order: orderDetail })
+        res.render("orderDetail", { layout: "buyer", order: orderDetail });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -52,7 +52,7 @@ module.exports = function (app) {
           return orderObj;
         });
 
-        res.render("orderDetail", { layout: "vendor", order: orderDetail })
+        res.render("orderDetail", { layout: "vendor", order: orderDetail });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -77,7 +77,7 @@ module.exports = function (app) {
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
         })
-        res.render("customerOrderHistory", { layout: "buyer", order: orderList })
+        res.render("customerOrderHistory", { layout: "buyer", order: orderList });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -102,7 +102,7 @@ module.exports = function (app) {
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
         })
-        res.render("supplierOrderHistory", { layout: "vendor", order: orderList })
+        res.render("supplierOrderHistory", { layout: "vendor", order: orderList });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -128,6 +128,39 @@ module.exports = function (app) {
   */
   app.post("/api/orders", async function (req, res) {
     console.log("Create an order");
+
+    /*
+    https://github.com/sequelize/sequelize/issues/9770
+    db.transaction((parent) => {
+      return Sequelize.Promise.all([
+        Table.findOrCreate({item: 1}, {transaction: parent}),
+        Table.findOrCreate({item: 2}, {transaction: parent}),
+        OtherTable.findAll({transaction: parent})
+      ]);
+    });
+
+     var members = req.body.members;
+      models.sequelize.transaction(function (t) {
+          var promises = []
+          for (var i = 0; i < members.length; i++) {
+              var newPromise = models.User.create({'firstname':members[i], 'email':members[i], 'pending':true}, {transaction: t});
+              promises.push(newPromise);
+          };
+          return Promise.all(promises).then(function(users) {
+              var userPromises = [];
+              for (var i = 0; i < users.length; i++) {
+                  userPromises.push(users[i].addInvitations([group], {transaction: t});
+              }
+              return Promise.all(userPromises);
+          });
+      }).then(function (result) {
+          console.log("YAY");
+      }).catch(function (err) {
+          console.log("NO!!!");
+          return next(err);
+      });
+
+    */
 
     db.OrderHeader.create(req.body)
       .then(createdOrder => {
