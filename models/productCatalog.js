@@ -52,6 +52,7 @@ module.exports = function (sequelize, DataTypes) {
   ProductCatalog.associate = function (models) {
     models.ProductCatalog.belongsTo(models.User, { as: "Vendor", foreignKey: { name: "supplier_id", allowNull: false } });
     models.ProductCatalog.hasMany(models.OrderDetail, { foreignKey: { name: "product_id", allowNull: false } });
+    models.ProductCatalog.hasMany(models.UserCartDetail, { foreignKey: { name: "product_id", allowNull: false } });
   };
 
   return ProductCatalog;

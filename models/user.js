@@ -52,6 +52,7 @@ module.exports = function (sequelize, DataTypes) {
 
   User.associate = function (models) {
     models.User.belongsTo(models.UserRole, { foreignKey: { name: "user_role_id", allowNull: false } });
+    models.User.hasMany(models.ProductCatalog, { foreignKey: { name: "supplier_id", allowNull: false } });
   };
 
   return User;

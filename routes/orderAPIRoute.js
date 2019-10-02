@@ -25,6 +25,9 @@ module.exports = function (app) {
         orderDetail = orderDetail.map(order => {
           const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          orderObj.OrderDetails.forEach(orderedProduct => {
+            orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY")
+          });
           return orderObj;
         });
         // res.json(orderDetail)
@@ -102,15 +105,24 @@ module.exports = function (app) {
       }
 
   */
-  app.post("/api/orders", function (req, res) {
+  app.post("/api/orders", async function (req, res) {
     console.log("Create an order");
-    db.OrderHeader.create(req.body, { include: [db.OrderDetail] })
+
+    db.OrderHeader.create(req.body)
       .then(createdOrder => {
-        res.status(200).send(createdOrder);
-      }).catch(function (error) {
+
+        req.body.OrderDetail.forEach(data => {
+          db.OrderDetail.create({ order_id: createdOrder.id, product_id: data.product_id, quantity: data.quantity });
+        });
+
+      }).then(() => {
+        res.sendStatus(200);
+      })
+      .catch(function (error) {
         console.log(error);
         res.sendStatus(400);
       });
+
   });
 
   // Delete an order using id
@@ -126,11 +138,11 @@ module.exports = function (app) {
   });
 
   // Updates an order status
-  app.put("/api/orders", function (req, res) {
+  app.put("/api/orders/:id", function (req, res) {
     console.log("Updates an order status");
     db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.params.id } })
       .then(affectedCount => {
-        res.status(200).send(affectedCount + " deleted");
+        res.status(200).send(affectedCount + " updated");
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
