@@ -13,15 +13,30 @@ $(document).ready(function() {
   $("#save-changes").on("click", function (event) {
     event.stopImmediatePropagation();
     event.preventDefault();
-    var orderData = [];
+    var order = {};
+    order.order_status = $(".dropdown").find('.btn').val();
+    var orderId = [];
     let elements = $(".selectOrder:checked");
     for (let element of elements) {
-      var order = {};
-      order.orderStatus = $(".dropdown").find('.btn').val();
-      order.orderId = $(element).attr("order-id");
-      orderData.push(order)
+      orderId.push($(element).attr("order-id"))
     }
-    console.log(orderData);
-  });
+    order.order_id = orderId
+    console.log(order);
+    console.log(Object.keys(order));
+    // Send the PUT request.
+    $.ajax("/api/multipleorders", {
+      type: "PUT",
+      data: JSON.stringify(order),
+      contentType: "application/json"
+
+    })
+    .then(
+      function (updatedRowCount) {
+        console.log(updatedRowCount + "Orders updated");
+        location.reload();
+      }
+      );
+      
+    });
 
 });
