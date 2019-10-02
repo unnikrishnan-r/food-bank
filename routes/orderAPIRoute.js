@@ -31,7 +31,7 @@ module.exports = function (app) {
           return orderObj;
         });
 
-        res.render("orderDetail", { layout: "buyer", order: orderDetail });
+        res.render("orderDetail", { layout: "buyer", order: orderDetail })
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -52,7 +52,8 @@ module.exports = function (app) {
           return orderObj;
         });
 
-        res.render("orderDetail", { layout: "vendor", order: orderDetail });
+        res.render("orderDetail", { layout: "vendor", order: orderDetail })
+
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
