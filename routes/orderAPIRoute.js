@@ -130,43 +130,59 @@ module.exports = function (app) {
   app.post("/api/orders", async function (req, res) {
     console.log("Create an order");
 
-    /*
+    var orderDetails = req.body.OrderDetail;
 
-    SUM: https://www.woolha.com/tutorials/sequelize-aggregate-functions-sum-count-min-max-etc-examples
+    db.sequelizeConnection.transaction(t => {
 
-    https://github.com/sequelize/sequelize/issues/9770
-    db.transaction((parent) => {
-      return Sequelize.Promise.all([
-        Table.findOrCreate({item: 1}, {transaction: parent}),
-        Table.findOrCreate({item: 2}, {transaction: parent}),
-        OtherTable.findAll({transaction: parent})
-      ]);
+      //Create an Order Header
+      return db.OrderHeader.create(req.body, { transaction: t })
+        .then(createdOrder => {
+          var orderPromises = [];
+
+          //Create multiple order details
+          for (let i = 0; i < orderDetails.length; i++) {
+            orderPromises.push(
+              db.OrderDetail.create({ order_id: createdOrder.id, product_id: orderDetails[i].product_id, quantity: orderDetails[i].quantity }, { transaction: t })
+            );
+          }
+
+          //Find multiple products to update inventory count
+          return Sequelize.Promise.all(orderPromises).then(newOrderDetails => {
+            var productPromises = [];
+
+            for (let j = 0; j < newOrderDetails.length; j++) {
+              productPromises.push(db.ProductCatalog.findOne({ where: { id: newOrderDetails[j].product_id }, transaction: t }));
+            }
+
+            //Update product inventory count
+            return Sequelize.Promise.all(productPromises).then(products => {
+              var updatePromises = [];
+
+              for (let k = 0; k < products.length; k++) {
+
+                let currentQty = products[k].product_current_qty;
+                let newQty = currentQty - orderDetails[k].quantity;
+
+                console.log(currentQty, newQty);
+
+                updatePromises.push(db.ProductCatalog.update({ product_current_qty: newQty }, { where: { id: products[k].id }, transaction: t }));
+              }
+
+              return Sequelize.Promise.all(updatePromises);
+
+            });
+
+          });
+
+        });
+    }).then(() => {
+      res.sendStatus(200);
+    }).catch(function (error) {
+      console.log(error);
+      res.sendStatus(400);
     });
 
-     var members = req.body.members;
-      models.sequelize.transaction(function (t) {
-          var promises = []
-          for (var i = 0; i < members.length; i++) {
-              var newPromise = models.User.create({'firstname':members[i], 'email':members[i], 'pending':true}, {transaction: t});
-              promises.push(newPromise);
-          };
-          return Promise.all(promises).then(function(users) {
-              var userPromises = [];
-              for (var i = 0; i < users.length; i++) {
-                  userPromises.push(users[i].addInvitations([group], {transaction: t});
-              }
-              return Promise.all(userPromises);
-          });
-      }).then(function (result) {
-          console.log("YAY");
-      }).catch(function (err) {
-          console.log("NO!!!");
-          return next(err);
-      });
-
-    */
-
-    db.OrderHeader.create(req.body)
+    /*db.OrderHeader.create(req.body)
       .then(createdOrder => {
 
         req.body.OrderDetail.forEach(data => {
@@ -182,7 +198,7 @@ module.exports = function (app) {
       .catch(function (error) {
         console.log(error);
         res.sendStatus(400);
-      });
+      });*/
 
   });
 
