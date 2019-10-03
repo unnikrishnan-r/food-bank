@@ -1,50 +1,73 @@
-<ul>
-    {{#each userList}}
-    <li>
-        <a href="/api/products/buyer/{{id}}">{{user_name}}</a><br>
-        {{user_addr_1}} {{user_addr_2}} <br>
-        {{user_addr_city}}, {{user_addr_province}} {{user_addr_postal_code}}
-    </li>
-    {{/each}}
-</ul>
+<div class="container">
+
+    <div class="card-columns">
+        {{#each userList}}
+        <div class="card">
+            <img src="{{user_profile_pic}}" class="card-img-top userProfileImg">
+            <div class="card-body">
+                <h5 class="card-title"><a href="/api/products/buyer/{{id}}">{{user_name}}</a></h5>
+                <p class="card-text">
+                    {{user_addr_1}} {{user_addr_2}} <br>
+                    {{user_addr_city}}, {{user_addr_province}} {{user_addr_postal_code}}
+                </p>
+            </div>
+        </div>
 
 
-{{~#if productList.length}}
-
-<p id="message"></p>
-
-<form id="orderForm">
-    <button type="submit" data-vendor-id="{{vendor.id}}" class="mb-2" id="place-order">Place
-        Order</button>
-
-    <table class="w-75">
-        <tr>
-            <th></th>
-            <th></th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Expiry Date</th>
-            <th>Available</th>
-            <th>Perishable</th>
-            <th>Order Quantity</th>
-        </tr>
-        {{#each productList}}
-        <tr>
-            <td class="selectCol"><input type="checkbox" id="select_input_{{id}}" data-product-id="{{id}}"
-                    class="selectOrder"></td>
-            <td class="w-25"><img src="{{product_img}}" class="img-fluid"></td>
-            <td>{{product_name}}</td>
-            <td>{{product_description}}</td>
-            <td>{{#if product_perishable}}{{product_expiry_date}}{{/if}}</td>
-            <td>{{product_current_qty}}</td>
-            <td>{{#if product_perishable}}Y{{else}}N{{/if}}</td>
-            <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
-                    max="{{product_current_qty}}"><span id="error_msg_{{id}}"></span>
-            </td>
-        </tr>
         {{/each}}
-    </table>
-</form>
+    </div>
+
+
+
+
+    {{~#if productList.length}}
+
+    <div class="card">
+
+        <div class="card-header">
+            <h2>{{vendor.user_name}} Products</h2>
+        </div>
+        <div class="card-body">
+
+            <p id="message" class="text-danger"></p>
+
+            <form id="orderForm">
+                <button type="submit" data-vendor-id="{{vendor.id}}" class="btn btn-primary mb-3" id="place-order">Place
+                    Order</button>
+
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Expiry Date</th>
+                        <th>Available</th>
+                        <th>Perishable</th>
+                        <th>Order Quantity</th>
+                    </tr>
+                    {{#each productList}}
+                    <tr>
+                        <td class="selectCol"><input type="checkbox" id="select_input_{{id}}" data-product-id="{{id}}"
+                                class="selectOrder"></td>
+                        <td class="w-25"><img src="{{product_img}}" class="img-fluid"></td>
+                        <td>{{product_name}}</td>
+                        <td>{{product_description}}</td>
+                        <td>{{#if product_perishable}}{{product_expiry_date}}{{/if}}</td>
+                        <td>{{product_current_qty}}</td>
+                        <td>{{#if product_perishable}}Y{{else}}N{{/if}}</td>
+                        <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
+                                max="{{product_current_qty}}"><br><span id="error_msg_{{id}}"
+                                class="text-danger"></span>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>
 
 <div class="modal" id="orderSubmitted" tabindex="-1" role="dialog" aria-labelledby="orderSubmitted" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
@@ -66,6 +89,8 @@
 </div>
 
 {{/if}}
+
+</div>
 
 <!--Bootstrap JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

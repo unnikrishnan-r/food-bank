@@ -91,7 +91,8 @@ module.exports = function (app) {
     console.log("Get All orders for a Vendor");
     db.OrderHeader
       .findAll({
-        where: { order_supplier_id: req.params.id
+        where: {
+          order_supplier_id: req.params.id
           // , order_status: "Open" 
         }
         , include: [{
