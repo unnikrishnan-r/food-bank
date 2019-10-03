@@ -11,6 +11,8 @@
 
 {{~#if productList.length}}
 
+<p id="message"></p>
+
 <form id="orderForm">
     <button type="submit" data-vendor-id="{{vendor.id}}" class="mb-2" id="place-order">Place
         Order</button>
@@ -37,7 +39,7 @@
             <td>{{product_current_qty}}</td>
             <td>{{#if product_perishable}}Y{{else}}N{{/if}}</td>
             <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
-                    max="{{product_current_qty}}">
+                    max="{{product_current_qty}}"><span id="error_msg_{{id}}"></span>
             </td>
         </tr>
         {{/each}}
