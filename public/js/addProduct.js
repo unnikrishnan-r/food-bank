@@ -47,7 +47,7 @@ $(document).ready(function () {
       // eslint-disable-next-line camelcase
       product_current_qty: $("#originalQty").val().trim(),
       // eslint-disable-next-line camelcase
-      supplier_id: 1,
+      supplier_id: localStorage.getItem("userId"),
       // eslint-disable-next-line camelcase
       product_posted_date: today
     };
@@ -60,7 +60,8 @@ $(document).ready(function () {
       .then(
         function () {
           console.log("New Product Added" + newProduct);
-          location.reload();
+          // location.reload();
+          location.href = "/api/products/vendor/" + localStorage.getItem("userId");
         }
       );
   });
