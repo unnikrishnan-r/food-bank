@@ -1,25 +1,18 @@
 $(document).ready(function () {
 
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, "0");
-  var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  var yyyy = today.getFullYear();
+  $("#nav-my-products").on("click", function (event) {
+    event.preventDefault();
 
-  today = yyyy + "/" + mm + "/" + dd;
+    location.href = "/api/products/vendor/" + localStorage.getItem("userId");
+  });
+
+  $("#nav-orders").on("click", function (event) {
+    event.preventDefault();
+
+    location.href = "/api/orders/vendor/" + localStorage.getItem("userId");
+  });
 
 
-  //if item is perishable show expiry date
-  function expiryDateToggle() {
-    $("#expiryDate").prop("disabled", false);
-    $("input[type=radio]").click(function () {
-      if ($(this).prop("value") == 1) {
-        $("#expiryDate").prop("disabled", false);
-      } else {
-        $("#expiryDate").prop("disabled", true);
-      }
-    });
-  }
-  expiryDateToggle();
 
   $("#add-product-btn").on("click", function (event) {
     event.preventDefault();
