@@ -42,7 +42,7 @@ VALUES
  "Mississauga",
 "Ontario",
 "L5V 2N6",
-"https://c7.uihere.com/files/785/11/812/walmart-canada-retail-company-logo-walmart-logo.jpg",
+"https://ticker.tv/news/wp-content/uploads/2018/02/WMT-696x270.jpeg",
  now(), 
  now());
 
