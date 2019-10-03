@@ -12,7 +12,7 @@ $(document).ready(function () {
     const vendorID = $(this).data("vendor-id");
 
     var newOrder = {
-      order_user_id: 1,
+      order_user_id: localStorage.getItem("userId"),
       order_supplier_id: vendorID,
       order_item_count: elements.length,
       order_status: "Open",
