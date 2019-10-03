@@ -45,7 +45,11 @@ module.exports = function (sequelize, DataTypes) {
     user_phone_no: {
       type: DataTypes.INTEGER(11),
       allowNull: true
-    }
+    },
+    user_profile_pic: {
+      type: DataTypes.STRING(150),
+      allowNull: true
+    },
   }, {
     tableName: "User"
   });
