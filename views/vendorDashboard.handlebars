@@ -1,12 +1,27 @@
-{{#each productList}}
-<ul>
-    <li>
-        <img src="{{product_img}}"><br>
-        {{product_name}} <br>
-        {{product_description}} <br>
-        Available: {{product_current_qty}} of {{product_original_qty}} <br>
-        Expiry Date: {{product_expiry_date}} <br>
-        Perishable: {{#if product_perishable}}Y{{else}}N{{/if}}<br>
-    </li>
-</ul>
-{{/each}}
+<div class="container">
+    <h1>Vendor Dashboard</h1>
+    <div class="card-columns">
+
+
+        {{#each productList}}
+        {{!-- <ul>
+    <li> --}}
+
+        <div class="card">
+            <img src="{{product_img}}" class="card-img-top productImg">
+            <div class="card-body">
+                <h5 class="card-title">{{product_name}}</h5>
+                <p class="card-text">{{product_description}}</p>
+                <p class="card-text">Available: {{product_current_qty}} of {{product_original_qty}}</p>
+                <p class="card-text">Expiry Date: {{product_expiry_date}}</p>
+                <p class="card-text">Perishable: {{#if product_perishable}}Y{{else}}N{{/if}}</p>
+
+            </div>
+        </div>
+        {{!-- </li> --}}
+        {{!-- </ul> --}}
+        {{/each}}
+
+    </div>
+
+</div>
