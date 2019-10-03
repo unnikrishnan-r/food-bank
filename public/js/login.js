@@ -1,5 +1,7 @@
 $(document).ready(function() {
   $("#login-btn").on("click", function(event) {
+    localStorage.clear();
+    console.log("Local storage cleared")
     event.preventDefault();
     var user = {
       // eslint-disable-next-line camelcase
@@ -19,6 +21,9 @@ $(document).ready(function() {
     }).then(function(user) {
       if (user) {
         console.log("logged in as ", user.userRole, user.userId);
+        localStorage.setItem("userId", user.userId);
+        localStorage.setItem("userRole", user.userRole);
+
         switch (user.userRole) {
         case "Vendor":
           location.href = `/api/products/vendor/${user.userId}`;

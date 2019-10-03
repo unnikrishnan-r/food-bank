@@ -91,7 +91,9 @@ module.exports = function (app) {
     console.log("Get All orders for a Vendor");
     db.OrderHeader
       .findAll({
-        where: { order_supplier_id: req.params.id, order_status: "Open" }
+        where: { order_supplier_id: req.params.id
+          // , order_status: "Open" 
+        }
         , include: [{
           model: db.User, as: "Buyer",
           where: { id: Sequelize.col('OrderHeader.order_user_id') }
@@ -220,6 +222,19 @@ module.exports = function (app) {
     db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " updated");
+      }).catch(function (error) {
+        console.log(error);
+        res.sendStatus(500);
+      });
+  });
+
+
+  // Updates an order status
+  app.put("/api/multipleorders", function (req, res) {
+    console.log("Updates multiple orders");
+    db.OrderHeader.update({ order_status: req.body.order_status }, { where: { id: req.body.order_id } })
+      .then(affectedCount => {
+        res.status(200).send(affectedCount);
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
