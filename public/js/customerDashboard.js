@@ -7,7 +7,14 @@ $(document).ready(function () {
     event.stopImmediatePropagation();
     event.preventDefault();
 
+    $("#message").empty();
+
     let elements = $(".selectOrder:checked");
+
+    if (elements.length === 0) {
+      $("#message").text("Select at least one product.");
+      return;
+    }
 
     const vendorID = $(this).data("vendor-id");
 
@@ -24,10 +31,14 @@ $(document).ready(function () {
     for (let element of elements) {
       let productID = $(element).data("product-id");
       let qtyInputID = "#qty_input_" + productID;
-      let quantity = $(qtyInputID).val();
+      let qtyElement = document.getElementById("qty_input_" + productID);
+      let quantity = qtyElement.value;
 
-      if (quantity < 1) {
-        return;
+      qtyElement.required = true;
+
+      if (!qtyElement.checkValidity()) {
+        let qtyErrMsgID = "#error_msg_" + productID;
+        $(qtyErrMsgID).text(qtyElement.validationMessage);
       }
 
       var newOrderDetail = {
@@ -38,20 +49,28 @@ $(document).ready(function () {
       newOrder.OrderDetail.push(newOrderDetail);
     }
 
-    $.ajax({
-      type: "POST",
-      url: "/api/orders",
-      data: JSON.stringify(newOrder),
-      contentType: "application/json"
-    })
-      .then(data => {
-        console.log($("#orderSubmitted"));
-        $("#orderSubmitted").modal();
+    var form = document.getElementById("orderForm");
 
+    if (form.checkValidity()) {
+      $.ajax({
+        type: "POST",
+        url: "/api/orders",
+        data: JSON.stringify(newOrder),
+        contentType: "application/json"
       })
-      .fail(function () {
-        console.log("Error");
-      });
+        .then(data => {
+          console.log($("#orderSubmitted"));
+          $("#orderSubmitted").modal();
+
+        })
+        .fail(function () {
+          console.log("Error");
+        });
+    }
+    else {
+      return;
+    }
+
   });
 
   $('#orderSubmitted').on('hidden.bs.modal', function (e) {
