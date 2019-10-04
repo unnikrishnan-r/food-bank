@@ -14,7 +14,8 @@ module.exports = function(app) {
         if (userData) {
           res.json({
             userId: userData.dataValues.id,
-            userRole: userData.dataValues.UserRole.user_role_name
+            userRole: userData.dataValues.UserRole.user_role_name,
+            userName: userData.dataValues.user_name
           });
         } else {
           res.json(null);
