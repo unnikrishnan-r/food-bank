@@ -55,8 +55,19 @@ body{
     column-count: 4;
 }
 
+hr{
+    border: solid 0.5px #4FA47D;
+    
+}
+
 .card-body{
-    background: #f0f0f0
+    /* background: #f0f0f0 */
+
+    color: rgb(83, 83, 83)
+    
+}
+.prod-desc{
+    font-size: 15px;
 }
 
 .page-title{
@@ -86,8 +97,15 @@ color: #fff;
    
         column-count: 1;
     }
+
+    .card-title{
+        font-size: 30px;
+    }
     .productImg{
         max-width: 100%;
+    }
+    .prod-desc{
+        font-size: 20px;
     }
     
   }
