@@ -4,15 +4,16 @@ $(document).ready(function () {
 
     $(".update").on("click", function () {
         var detailID = $(this).data("cart-detail-id");
+        var quantity = $(`#qty_input_${detailID}`).val();
+        quantity = parseInt(quantity);
 
-        var quantity = {
-            id: detailID
-            , quantity: $(`#row-${detailID} #qty_input`).val()
+        var cartDetail = {
+            quantity: quantity
         };
 
-        $.post(`/api/cart/user`, {
+        $.ajax(`/api/cart/item/${detailID}`, {
             type: "PUT",
-            data: quantity
+            data: cartDetail
         }).then(results => {
             console.log(results);
         });
@@ -21,11 +22,12 @@ $(document).ready(function () {
     $(".delete").on("click", function () {
         var detailID = $(this).data("cart-detail-id");
 
-        /*$.post(`/api/cart/user/${detailID}`, {
+        $.ajax(`/api/cart/item/${detailID}`, {
             type: "DELETE"
         }).then(results => {
             console.log(results);
-        });*/
+            location.reload();
+        });
 
         console.log(detailID);
     });
@@ -70,20 +72,19 @@ $(document).ready(function () {
         var form = document.getElementById("orderForm");
 
         if (form.checkValidity()) {
-            $.ajax({
+            /*$.ajax({
                 type: "POST",
                 url: "/api/orders",
                 data: JSON.stringify(newOrder),
                 contentType: "application/json"
             })
                 .then(data => {
-                    console.log($("#orderSubmitted"));
                     $("#orderSubmitted").modal();
 
                 })
                 .fail(function () {
                     console.log("Error");
-                });
+                });*/
         }
         else {
             return;

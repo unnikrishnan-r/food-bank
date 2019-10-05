@@ -57,7 +57,6 @@ $(document).ready(function () {
         contentType: "application/json"
       })
         .then(data => {
-          console.log($("#orderSubmitted"));
           $("#orderSubmitted").modal();
 
         })

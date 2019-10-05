@@ -28,6 +28,9 @@ module.exports = function (app) {
         if (userList.length > 0) {
           res.redirect(`/api/users/${req.params.role}/${userList[0].id}`);
         }
+        else {
+          res.render("customerDashboard");
+        }
 
       })
       .catch(function (error) {
@@ -46,24 +49,26 @@ module.exports = function (app) {
 
         if (userList.length > 0) {
 
-          db.ProductCatalog.findAll({
+          return db.ProductCatalog.findAll({
             include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }],
             order: [[Sequelize.col('ProductCatalog.product_perishable'), 'DESC'],
             Sequelize.col('ProductCatalog.product_expiry_date')]
+          }).then(productList => {
+            productList.map(product => {
+              const productObj = product.toJSON();
+              productObj.createdAt = moment(productObj.product_expiry_date).format("MM/DD/YYYY");
+              return productObj;
+            });
+
+            res.render("customerDashboard", { layout: "buyer", userList: vendorList, productList: productList });
           })
-            .then(productList => {
-              productList.map(product => {
-                const productObj = product.toJSON();
-                productObj.createdAt = moment(productObj.product_expiry_date).format("MM/DD/YYYY");
-                return productObj;
-              });
-              //res.json({ vendorList, productList });
-              res.render("customerDashboard", { layout: "buyer", userList: vendorList, productList: productList });
-            })
             .catch(error => {
               console.error(error);
               res.sendStatus(400);
             });
+        }
+        else {
+          res.render("customerDashboard");
         }
 
       })

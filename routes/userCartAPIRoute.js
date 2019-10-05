@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 var db = require("../models");
 var Sequelize = require("sequelize");
+var Op = Sequelize.Op;
 
 module.exports = function (app) {
   // Get cart
@@ -18,6 +19,19 @@ module.exports = function (app) {
         }
 
         res.render("customerCart", { layout: "buyer", cart: cartList });
+      }).catch(function (error) {
+        console.log(error);
+        res.sendStatus(500);
+      });
+  });
+
+  app.get("/api/cart/user/:id/count", function (req, res) {
+    console.log("Get Cart Item Count");
+    db.UserCartHeader.count({
+      where: { cart_owner_id: req.params.id }, include: [db.UserCartDetail]
+    })
+      .then(cartCount => {
+        res.json({ count: cartCount });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -49,8 +63,9 @@ module.exports = function (app) {
 
         //Create multiple cart details
         for (let i = 0; i < cartDetails.length; i++) {
+          console.log(cartDetails[i].product_id);
           orderPromises.push(
-            db.UserCartDetail.findOrCreate({ where: { cart_id: createdCart[0].id }, defaults: { cart_id: createdCart[0].id, product_id: cartDetails[i].product_id, quantity: cartDetails[i].quantity }, transaction: t })
+            db.UserCartDetail.findOrCreate({ where: { [Op.and]: [{ cart_id: createdCart[0].id }, { product_id: cartDetails[i].product_id }] }, defaults: { cart_id: createdCart[0].id, product_id: cartDetails[i].product_id, quantity: cartDetails[i].quantity }, transaction: t })
           );
         }
 
@@ -60,10 +75,10 @@ module.exports = function (app) {
 
           for (let k = 0; k < order.length; k++) {
 
-            console.log(order[k][0]);
-            console.log(order[k][0].dataValues);
+            console.log(order[k], order[k][0].dataValues, order[k][0]._options.isNewRecord);
+            console.log(order[k][0].dataValues.createdAt === order[k][0].dataValues.updatedAt)
 
-            if (!order[k].isNewRecord) {
+            if (!order[k][0]._options.isNewRecord) {
               let newQty = parseInt(order[k][0].dataValues.quantity) + parseInt(cartDetails[k].quantity);
 
               updatePromises.push(db.UserCartDetail.update({ quantity: newQty }, { where: { id: order[k][0].dataValues.id }, transaction: t }));
@@ -85,9 +100,9 @@ module.exports = function (app) {
   });
 
   // Updates a cart item
-  app.put("/api/cart/item", function (req, res) {
+  app.put("/api/cart/item/:id", function (req, res) {
     console.log("Updates a cart item quantity");
-    db.UserCartDetail.update({ quantity: req.body.quantity }, { where: { id: req.body.id } })
+    db.UserCartDetail.update({ quantity: req.body.quantity }, { where: { id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " updated");
       }).catch(function (error) {
@@ -97,9 +112,9 @@ module.exports = function (app) {
   });
 
   // Delete a cart item
-  app.delete("/api/cart/item", function (req, res) {
+  app.delete("/api/cart/item/:id", function (req, res) {
     console.log("Delete a cart");
-    db.UserCartDetail.destroy({ where: { id: req.body.id } })
+    db.UserCartDetail.destroy({ where: { id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
