@@ -32,6 +32,13 @@ $(document).ready(function() {
     })
     .then(
       function (updatedRowCount) {
+        $.ajax("/api/notification/twilio", {
+          type: "POST",
+          data: JSON.stringify(order),
+          contentType: "application/json"
+    
+        }).then(response => console.log(response));
+    
         console.log(updatedRowCount + "Orders updated");
         location.reload();
       }
