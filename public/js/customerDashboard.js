@@ -18,15 +18,11 @@ $(document).ready(function () {
 
     const vendorID = $(this).data("vendor-id");
 
-    var newOrder = {
-      order_user_id: localStorage.getItem("userId"),
-      order_supplier_id: vendorID,
-      order_item_count: elements.length,
-      order_status: "Open",
-      OrderDetail: []
+    var newCart = {
+      cart_owner_id: localStorage.getItem("userId"),
+      cart_status: "Open",
+      UserCartDetail: []
     }
-
-    var orderDetails = [];
 
     for (let element of elements) {
       let productID = $(element).data("product-id");
@@ -41,12 +37,12 @@ $(document).ready(function () {
         $(qtyErrMsgID).text(qtyElement.validationMessage);
       }
 
-      var newOrderDetail = {
+      var newCartDetail = {
         product_id: productID,
         quantity: quantity
       }
 
-      newOrder.OrderDetail.push(newOrderDetail);
+      newCart.UserCartDetail.push(newCartDetail);
     }
 
     var form = document.getElementById("orderForm");
@@ -54,8 +50,8 @@ $(document).ready(function () {
     if (form.checkValidity()) {
       $.ajax({
         type: "POST",
-        url: "/api/orders",
-        data: JSON.stringify(newOrder),
+        url: "/api/cart/user",
+        data: JSON.stringify(newCart),
         contentType: "application/json"
       })
         .then(data => {

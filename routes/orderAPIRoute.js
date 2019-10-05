@@ -185,24 +185,6 @@ module.exports = function (app) {
       res.sendStatus(400);
     });
 
-    /*db.OrderHeader.create(req.body)
-      .then(createdOrder => {
-
-        req.body.OrderDetail.forEach(data => {
-          db.OrderDetail.create({ order_id: createdOrder.id, product_id: data.product_id, quantity: data.quantity })
-            .then(createdOrderDetail => {
-              db.ProductCatalog.update({ product_current_qty: Sequelize.col('ProductCatalog.product_current_qty') - createdOrderDetail.quantity }, { where: { id: createdOrderDetail.product_id } })
-            });
-        });
-
-      }).then(() => {
-        res.sendStatus(200);
-      })
-      .catch(function (error) {
-        console.log(error);
-        res.sendStatus(400);
-      });*/
-
   });
 
   // Delete an order using id
