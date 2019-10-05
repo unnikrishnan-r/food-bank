@@ -1,0 +1,45 @@
+.navbar{
+    background: #4FA47D;
+    margin-bottom: 30px;
+}
+
+.navbar-brand{
+    font-family: 'Aladin', cursive;
+    font-size: 25px;
+}
+
+.nav-link, .navbar-brand{
+    color: #f4f4f4; 
+    cursor: pointer;
+}
+
+.navlink{
+    margin-right: 1em !important;
+}
+
+.navlink:hover{
+    background: #f4f4f4;
+    color: #4FA47D;
+}
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
+
+.navbar-toggler{
+    color: #fff !important;
+    font-size: 25px;
+}
+
+.handlebar-content{
+    margin-top: 100px;
+}
+
+.card-columns {
+    @include media-breakpoint-only(lg) {
+      column-count: 4;
+    }
+    @include media-breakpoint-only(xl) {
+      column-count: 5;
+    }
+  }

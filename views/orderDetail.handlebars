@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="card">
+
+
+        {{#each order}}
+        <div class="card-header">
+            <h2>Order #{{id}}</h2>
+        </div>
+        <div class="card-body">
+            <h5>Details</h5>
+            <table class="orderHeader">
+
+                <tr>
+
+                    <td class="orderHeaderColumn supplierName"> <strong>Supplier: </strong> {{Vendor.user_name}}</td>
+                    <td class="orderHeaderColumn buyerName"> <strong>Customer: </strong> {{Buyer.user_name}}</td>
+                    <td class="orderHeaderColumn orderStatus"> <strong>Order Status: </strong> {{order_status}}</td>
+                    <td class="orderHeaderColumn orderItemCount"> <strong>No. of Items: </strong> {{order_item_count}}
+                    </td>
+                    <td class="orderHeaderColumn orderDate"> <strong>Order Created: </strong> {{createdAt}}</td>
+                </tr>
+                {{/each}}
+            </table>
+
+            <br> <br>
+            <h5>Items</h5>
+            <table class="orderHeader table-stripped">
+                <thead>
+                    <th>Product Id</th>
+                    <th>Product Name</th>
+                    <th>Product Image</th>
+                    <th>Order Quantity</th>
+                    <th>Expiration Date</th>
+
+                </thead>
+                {{#each order}}
+
+                {{#each OrderDetails}}
+                <tr>
+                    <td class="orderDetailColumn productId">{{product_id}} </td>
+                    <td class="orderDetailColumn productName">{{ProductCatalog.product_name}} </td>
+                    <td class="orderDetailColumn productImage"><img class="productImage"
+                            src="{{ProductCatalog.product_img}}">
+                    </td>
+                    <td class="orderDetailColumn orderQuantity">{{quantity}} </td>
+                    <td class="orderDetailColumn productExpiryDate">{{ProductCatalog.product_expiry_date}} </td>
+                </tr>
+                {{/each}}
+                {{/each}}
+
+            </table>
+            <a href="" class="btn btn-primary mt-3" id="order-btn">See All Orders</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/orderDetail.js"></script>

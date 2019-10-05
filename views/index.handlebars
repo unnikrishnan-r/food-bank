@@ -1,42 +1,122 @@
-{{!-- <div id="home">
-  <div class="container">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
-          </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Examples:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
+{{!-- navbar --}}
+<nav class="navbar navbar-expand-lg fixed-top">
+  <a href="#" class="navbar-brand">Robin Hood</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarContent">
+    <ul class="navbar-nav mr-4">
+      <li class="nav-item">
+        <a class="nav-link" data-value="feature" href="#">Features</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link" data-value="about">About</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link">Login</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+<header class="header">
+  <div class="overlay">
+    <div class="container">
+      <div class="description text-center">
+        <h1>
+          Robin Hood - The Food Banking Solution
+        </h1>
+        <p>One third of all food produced globally is wasted. Let's end it</p>
+        <hr>
+        <a href="#" class="nav-link" data-value="feature"><button class="btn btn-outline-secondary btn-lg">Learn
+            More</button></a>
+
       </div>
     </div>
   </div>
-</div> --}}
-home
+</header>
 
-<a href="/login">
-  <h2>Login</h2>
-</a>
+{{!-- main feature --}}
 
-<a href="/addProductForm">
-  <h2>add product</h2>
-</a>
+<div class="row main-feature" id="feature">
+
+  <div class="col-12">
+    <h1 class="text-center">Our Solution</h1>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <img src="./img/giveBread.jpg" alt="" class="img-fluid">
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 desc">
+      <div class="row">
+        <h3>Centralized Hub</h3>
+
+        <p>Our platform enables our partners to list their donations in one central marketplace</p>
+      </div>
+      <hr>
+      <div class="row">
+        <h3>Reduce Food Waste</h3>
+
+        <p>Every tonne of food waste that is avoided is the equivalent of taking one car off the road each year
+        </p>
+      </div>
+      <hr>
+      <div class="row">
+        <h3>Contribute To Society</h3>
+
+        <p>Helps corporations fulfill their social responsibility goals, and contribute to helping their community </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{!-- screenshots --}}
+<div class="screenshots" id="about">
+  <h1 class="text-center">App Screenshots</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <img src="https://via.placeholder.com/640x360.png" alt="" class="img-fluid">
+        <div class="desc text-center">Dashboard</div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <img src="https://via.placeholder.com/640x360.png" alt="" class="img-fluid">
+        <div class="desc text-center">Order</div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <img src="https://via.placeholder.com/640x360.png" alt="" class="img-fluid">
+        <div class="desc text-center">Checkout</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="page-footer">
+  <h5 class="footer-title text-center">Get the Code</h5>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="footer-links text-center">
+          <a href="https://github.com/unnikrishnan-r/food-bank">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-copyright text-center">
+    © Copyright 2019 - 2020 | Robin Hood | All Rights Reserved
+  </div>
+</footer>
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

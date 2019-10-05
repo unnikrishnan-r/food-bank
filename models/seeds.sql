@@ -31,6 +31,7 @@ INSERT INTO `foodbank_db`.`User`
 `user_addr_city`,
 `user_addr_province`,
 `user_addr_postal_code`,
+`user_profile_pic`,
 `createdAt`,
 `updatedAt`)
 VALUES
@@ -41,6 +42,7 @@ VALUES
  "Mississauga",
 "Ontario",
 "L5V 2N6",
+"https://ticker.tv/news/wp-content/uploads/2018/02/WMT-696x270.jpeg",
  now(), 
  now());
 
@@ -53,6 +55,7 @@ INSERT INTO `foodbank_db`.`User`
 `user_addr_city`,
 `user_addr_province`,
 `user_addr_postal_code`,
+`user_profile_pic`,
 `createdAt`,
 `updatedAt`)
 VALUES
@@ -63,6 +66,7 @@ VALUES
 "Mississauga",
 "Ontario",
 "L5R 3S9",
+"https://www.costco.ca/wcsstore/CostcoGLOBALSAS/images/Costco-Wholesale-Canada.svg",
 now(), 
 now());
 

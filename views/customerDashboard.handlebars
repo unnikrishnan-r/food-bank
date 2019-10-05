@@ -1,29 +1,104 @@
-{{#each userList}}
-<ul>
-    <li>
-        <a href="/api/products/vendor/{{id}}">{{user_name}}</a><br>
-        {{user_addr_1}} {{user_addr_2}} <br>
-        {{user_addr_city}}, {{user_addr_province}} {{user_addr_postal_code}}
-    </li>
-</ul>
-{{/each}}
+<div class="container">
 
-{{#each productList}}
-<ul>
-    <li>
-        <img src="{{product_img}}"><br>
-        {{product_name}} <br>
-        {{product_description}} <br>
-        Expiry Date: {{product_expiry_date}} <br>
-        Available: {{product_current_qty}} <br>
-        Perishable: {{#if product_perishable}}Y{{else}}N{{/if}}<br>
+    <div class="card-columns">
+        {{#each userList}}
+        <div class="card">
+            <img src="{{user_profile_pic}}" class="card-img-top userProfileImg">
+            <div class="card-body">
+                <h5 class="card-title"><a href="/api/products/buyer/{{id}}">{{user_name}}</a></h5>
+                <p class="card-text">
+                    {{user_addr_1}} {{user_addr_2}} <br>
+                    {{user_addr_city}}, {{user_addr_province}} {{user_addr_postal_code}}
+                </p>
+            </div>
+        </div>
 
-        <form class="form-inline">
-            <label class="sr-only" for="qty_input">Quantity</label>
-            <input type="text" id="qty_input" size="4" maxlength="4" placeholder="Qty" class="form-control mb-2 mr-2">
-            <button type="button" data-product-id="{{id}}" data-vendor-id="{{Vendor.id}}" class="mb-2 place-order">Place
-                Order</button>
-        </form>
-    </li>
-</ul>
-{{/each}}
+
+        {{/each}}
+    </div>
+
+
+
+
+    {{~#if productList.length}}
+
+    <div class="card">
+
+        <div class="card-header">
+            <h2>{{vendor.user_name}} Products</h2>
+        </div>
+        <div class="card-body">
+
+            <p id="message" class="text-danger"></p>
+
+            <form id="orderForm">
+                <button type="submit" data-vendor-id="{{vendor.id}}" class="btn btn-primary mb-3" id="place-order">Place
+                    Order</button>
+
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Expiry Date</th>
+                        <th>Available</th>
+                        <th>Perishable</th>
+                        <th>Order Quantity</th>
+                    </tr>
+                    {{#each productList}}
+                    <tr>
+                        <td class="selectCol"><input type="checkbox" id="select_input_{{id}}" data-product-id="{{id}}"
+                                class="selectOrder"></td>
+                        <td class="w-25"><img src="{{product_img}}" class="img-fluid"></td>
+                        <td>{{product_name}}</td>
+                        <td>{{product_description}}</td>
+                        <td>{{#if product_perishable}}{{product_expiry_date}}{{/if}}</td>
+                        <td>{{product_current_qty}}</td>
+                        <td>{{#if product_perishable}}Y{{else}}N{{/if}}</td>
+                        <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
+                                max="{{product_current_qty}}"><br><span id="error_msg_{{id}}"
+                                class="text-danger"></span>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="orderSubmitted" tabindex="-1" role="dialog" aria-labelledby="orderSubmitted" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Order Submitted</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Your order has been successfully submitted.
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{/if}}
+
+</div>
+
+<!--Bootstrap JS-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="/js/customerDashboard.js"></script>

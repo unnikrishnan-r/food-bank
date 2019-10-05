@@ -1,0 +1,160 @@
+body{
+    box-sizing: border-box;
+}
+.navbar{
+    background: #4FA47D;
+}
+
+.navbar-brand{
+    font-family: 'Aladin', cursive;
+    font-size: 25px;
+}
+
+.nav-link, .navbar-brand{
+    color: #f4f4f4; 
+    cursor: pointer;
+}
+
+.navlink{
+    margin-right: 1em !important;
+}
+
+.navlink:hover{
+    background: #f4f4f4;
+    color: #4FA47D;
+}
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
+
+.navbar-toggler{
+    color: #fff !important;
+    font-size: 25px;
+}
+
+.header{
+    background-image: url("../img/hero.gif");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay{
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.29);
+}
+
+.description{
+    position: absolute;
+    top:30%;
+    margin: 0 auto;
+    padding: 2em;
+    text-shadow: 2px 2px #000000;
+}
+
+.description h1{
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
+.description p{
+    color: #fff;
+    font-size: 20px;
+    width: 75%;
+    line-height: 1.5;
+    margin: auto;
+}
+.description hr{
+    max-width: 20%;
+    border: 0.5px solid #ccc;
+}
+
+.description button{
+    border:1px solid #4FA47D;
+    background: #4FA47D;
+    color: #fff;
+}
+
+.main-feature{
+    margin: 4em 0;
+    padding: 1em;
+    position: relative;
+}
+.main-feature h1{
+    color: #4FA47D;
+    padding-bottom: 75px;
+}
+
+.main-feature img{
+    height: auto;
+    width: auto;
+}
+.main-feature span{
+    display: block;
+    color: #888;
+    position: absolute;
+    left:115px;
+}
+.main-feature .desc{
+    padding: 2em;
+    border-left: 4px solid #4FA47D;
+}
+.main-feature .desc h3{
+    color: #4FA47D;
+    display: block;
+}
+.main-feature .desc p{
+    line-height:2;
+    color: #888;
+  
+}
+
+.screenshots {
+    margin: 4em 0;
+    position: relative;
+}
+.screenshots h1{
+    color: #4FA47D;
+    margin: 2em;
+}
+.screenshots img{
+    height: 15rem;
+    margin: 1em;
+}
+
+.screenshots desc{
+    background: #4FA47D;
+    text-align: center;
+    color: #fff;
+    transition: .3s ease-in-out;
+}
+
+footer{
+    background: rgb(39, 83, 63);
+    color: #fff;
+}
+
+.footer-title{
+    padding-top: 20px;
+}
+
+.footer-copyright{
+    font-size: 13px;
+    color: #fff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.footer-links a{
+    font-size: 20px;
+    padding: 3px;
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
+}

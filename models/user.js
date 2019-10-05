@@ -45,13 +45,18 @@ module.exports = function (sequelize, DataTypes) {
     user_phone_no: {
       type: DataTypes.INTEGER(11),
       allowNull: true
-    }
+    },
+    user_profile_pic: {
+      type: DataTypes.STRING(150),
+      allowNull: true
+    },
   }, {
     tableName: "User"
   });
 
   User.associate = function (models) {
     models.User.belongsTo(models.UserRole, { foreignKey: { name: "user_role_id", allowNull: false } });
+    models.User.hasMany(models.ProductCatalog, { foreignKey: { name: "supplier_id", allowNull: false } });
   };
 
   return User;

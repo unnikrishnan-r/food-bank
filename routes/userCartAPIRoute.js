@@ -2,25 +2,12 @@
 var db = require("../models");
 
 module.exports = function (app) {
-
   // Get cart
-  app.get("/api/cart/users", function (req, res) {
-    console.log("Get All Carts");
-    db.UserCartHeader.findAll({ include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }, { model: db.User, as: "Buyer" }] })
-      .then(carts => {
-        res.json(carts);
-      }).catch(function (error) {
-        console.log(error);
-        res.sendStatus(500);
-      });
-  });
-
-  // Get cart
-  app.get("/api/cart/users/:id", function (req, res) {
+  app.get("/api/cart/user", function (req, res) {
     console.log("Get Cart");
-    db.UserCartHeader.findAll({ where: { cart_owner_id: req.params.id }, include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }] })
+    db.UserCartHeader.findAll({ where: { cart_owner_id: req.body.id }, include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }] })
       .then(cart => {
-        res.render("customerCart", { layout: "buyer", UserCartDetails: cart[0].UserCartDetails });
+        res.json(cart);
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -36,7 +23,7 @@ module.exports = function (app) {
         "quantity": 1
       } 
   */
-  app.post("/api/cart/users", function (req, res) {
+  app.post("/api/cart/user", function (req, res) {
     console.log("Create a Cart");
 
     db.sequelizeConnection.transaction(transaction => {
@@ -63,7 +50,7 @@ module.exports = function (app) {
   });
 
   // Updates a cart item
-  app.put("/api/cart/users", function (req, res) {
+  app.put("/api/cart/item", function (req, res) {
     console.log("Updates a cart item quantity");
     db.UserCartDetail.update({ quantity: req.body.quantity }, { where: { id: req.body.id } })
       .then(affectedCount => {
@@ -75,9 +62,9 @@ module.exports = function (app) {
   });
 
   // Delete a cart item
-  app.delete("/api/cart/users/item/:id", function (req, res) {
-    console.log("Delete a cart item");
-    db.UserCartDetail.destroy({ where: { id: req.params.id } })
+  app.delete("/api/cart/item", function (req, res) {
+    console.log("Delete a cart");
+    db.UserCartDetail.destroy({ where: { id: req.body.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
@@ -87,9 +74,9 @@ module.exports = function (app) {
   });
 
   // Delete a cart using id
-  app.delete("/api/cart/users/:id", function (req, res) {
+  app.delete("/api/cart/user", function (req, res) {
     console.log("Delete a cart");
-    db.UserCartHeader.destroy({ where: { cart_owner_id: req.params.id } })
+    db.UserCartHeader.destroy({ where: { id: req.body.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
