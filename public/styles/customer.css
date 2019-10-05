@@ -35,6 +35,12 @@
     margin-top: 100px;
 }
 
+.page-title{
+    padding: 15px;
+    
+    color: #fff;
+    }
+
 .card-columns {
     @include media-breakpoint-only(lg) {
       column-count: 4;
