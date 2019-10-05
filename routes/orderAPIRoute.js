@@ -241,4 +241,35 @@ module.exports = function (app) {
         res.sendStatus(500);
       });
   });
+
+  // Get an Unique Order
+  app.get("/api/uniqueorder/:id", function(req, res) {
+    console.log("Get an Unique");
+
+    db.OrderHeader.findAll({
+      where: { id: req.params.id },
+      include: [
+        { model: db.OrderDetail, include: [db.ProductCatalog] },
+        { model: db.User, as: "Buyer" },
+        { model: db.User, as: "Vendor" }
+      ]
+    })
+      .then(orderDetail => {
+        orderDetail = orderDetail.map(order => {
+          const orderObj = order.toJSON();
+          orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+          orderObj.OrderDetails.forEach(orderedProduct => {
+            orderedProduct.ProductCatalog.product_expiry_date = moment(
+              orderedProduct.ProductCatalog.product_expiry_date
+            ).format("MM/DD/YYYY");
+          });
+          res.json(orderObj);
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+        res.sendStatus(500);
+      });
+  });
+
 };
