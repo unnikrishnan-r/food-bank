@@ -48,6 +48,8 @@ $(document).ready(function () {
     var form = document.getElementById("orderForm");
 
     if (form.checkValidity()) {
+      console.log(newCart);
+
       $.ajax({
         type: "POST",
         url: "/api/cart/user",

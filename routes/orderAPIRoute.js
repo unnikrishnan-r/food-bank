@@ -166,8 +166,6 @@ module.exports = function (app) {
                 let currentQty = products[k].product_current_qty;
                 let newQty = currentQty - orderDetails[k].quantity;
 
-                console.log(currentQty, newQty);
-
                 updatePromises.push(db.ProductCatalog.update({ product_current_qty: newQty }, { where: { id: products[k].id }, transaction: t }));
               }
 

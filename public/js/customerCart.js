@@ -18,18 +18,27 @@ $(document).ready(function () {
         });
     });
 
+    $(".delete").on("click", function () {
+        var detailID = $(this).data("cart-detail-id");
+
+        var quantity = {
+            id: detailID
+            , quantity: $(`#row-${detailID} #qty_input`).val()
+        };
+
+        $.post(`/api/cart/user`, {
+            type: "PUT",
+            data: quantity
+        }).then(results => {
+            console.log(results);
+        });
+    });
+
     $("#place-order").on("click", function (event) {
         event.stopImmediatePropagation();
         event.preventDefault();
 
-        $("#message").empty();
-
         let elements = $(".selectOrder:checked");
-
-        if (elements.length === 0) {
-            $("#message").text("Select at least one product.");
-            return;
-        }
 
         const vendorID = $(this).data("vendor-id");
 

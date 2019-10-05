@@ -1,13 +1,23 @@
 /* eslint-disable camelcase */
 var db = require("../models");
+var Sequelize = require("sequelize");
 
 module.exports = function (app) {
   // Get cart
-  app.get("/api/cart/user", function (req, res) {
+  app.get("/api/cart/user/:id", function (req, res) {
     console.log("Get Cart");
-    db.UserCartHeader.findAll({ where: { cart_owner_id: req.body.id }, include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }] })
-      .then(cart => {
-        res.json(cart);
+    db.UserCartHeader.findAll({ where: { cart_owner_id: req.params.id }, include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }] })
+      .then(cartList => {
+
+        if (cartList && cartList.UserCartDetail) {
+          cartList.UserCartDetail = cartList.UserCartDetail.map(order => {
+            const orderObj = order.toJSON();
+            orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
+            return orderObj;
+          });
+        }
+
+        res.render("customerCart", { layout: "buyer", cart: cartList });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -40,11 +50,29 @@ module.exports = function (app) {
         //Create multiple cart details
         for (let i = 0; i < cartDetails.length; i++) {
           orderPromises.push(
-            db.UserCartDetail.create({ cart_id: createdCart[0].id, product_id: req.body.product_id, quantity: req.body.quantity }, { transaction: t })
+            db.UserCartDetail.findOrCreate({ where: { cart_id: createdCart[0].id }, defaults: { cart_id: createdCart[0].id, product_id: cartDetails[i].product_id, quantity: cartDetails[i].quantity }, transaction: t })
           );
         }
 
-        return Sequelize.Promise.all(orderPromises);
+        //Update order cart detail if it already exists
+        return Sequelize.Promise.all(orderPromises).then(order => {
+          var updatePromises = [];
+
+          for (let k = 0; k < order.length; k++) {
+
+            console.log(order[k][0]);
+            console.log(order[k][0].dataValues);
+
+            if (!order[k].isNewRecord) {
+              let newQty = parseInt(order[k][0].dataValues.quantity) + parseInt(cartDetails[k].quantity);
+
+              updatePromises.push(db.UserCartDetail.update({ quantity: newQty }, { where: { id: order[k][0].dataValues.id }, transaction: t }));
+            }
+          }
+
+          return Sequelize.Promise.all(updatePromises);
+
+        });
 
       });
     }).then(() => {

@@ -5,40 +5,44 @@
             <h2>Cart</h2>
         </div>
         <div class="card-body">
-
-            <p id="message" class="text-danger"></p>
+            <button type="submit" class="btn btn-primary mb-3" id="place-order">Submit
+                Order</button>
 
             <form id="orderForm">
                 <table class="table">
                     <tr>
-                        <th></th>
                         <th></th>
                         <th>Name</th>
                         <th>Description</th>
                         <th>Expiry Date</th>
                         <th>Available</th>
                         <th>Perishable</th>
-                        <th>Order Quantity</th>
+                        <th>Quantity</th>
+                        <th></th>
                     </tr>
+                    {{#each cart}}
                     {{#each UserCartDetails}}
                     <tr>
-                        <td class="selectCol"><input type="checkbox" id="select_input_{{id}}"
-                                data-product-id="{{ProductCatalog.id}}" class="selectOrder"></td>
                         <td class="w-25"><img src="{{ProductCatalog.product_img}}" class="img-fluid"></td>
                         <td>{{ProductCatalog.product_name}}</td>
                         <td>{{ProductCatalog.product_description}}</td>
                         <td>{{#if ProductCatalog.product_perishable}}{{ProductCatalog.product_expiry_date}}{{/if}}</td>
                         <td>{{ProductCatalog.product_current_qty}}</td>
                         <td>{{#if ProductCatalog.product_perishable}}Y{{else}}N{{/if}}</td>
-                        <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
-                                max="{{ProductCatalog.product_current_qty}}"><br><span
+                        <td clas="quantityCol"><input type="number" id="qty_input_{{id}}"
+                                data-vendor-id="{{ProductCatalog.supplier_id}}" size="4" min="1" <td
+                                clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
+                                max="{{ProductCatalog.product_current_qty}}" value="{{quantity}}"><br><span
                                 id="error_msg_{{ProductCatalog.id}}" class="text-danger"></span>
                         </td>
                         <td>
-                            <button type="button" data-cart-detail-id="{{id}}" class="update">Update</button>
-                            <button type="button" data-cart-detail-id="{{id}}" class="delete">Delete</button>
+                            <button type="button" data-cart-detail-id="{{id}}"
+                                class="btn btn-primary mb-2 update">Update</button>
+                            <button type="button" data-cart-detail-id="{{id}}"
+                                class="btn btn-primary mb-2 delete">Delete</button>
                         </td>
                     </tr>
+                    {{/each}}
                     {{/each}}
                     </tbody>
                 </table>
@@ -66,3 +70,5 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="/js/customerCart.js"></script>
