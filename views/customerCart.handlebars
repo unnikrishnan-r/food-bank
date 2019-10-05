@@ -5,7 +5,7 @@
             <h2>Cart</h2>
         </div>
         <div class="card-body">
-            <button type="submit" class="btn btn-primary mb-3" id="place-order">Submit
+            <button type="submit" data-vendor-id="{{vendor.id}}" class="btn btn-primary mb-3" id="place-order">Submit
                 Order</button>
 
             <form id="orderForm">
@@ -29,9 +29,7 @@
                         <td>{{#if ProductCatalog.product_perishable}}{{ProductCatalog.product_expiry_date}}{{/if}}</td>
                         <td>{{ProductCatalog.product_current_qty}}</td>
                         <td>{{#if ProductCatalog.product_perishable}}Y{{else}}N{{/if}}</td>
-                        <td clas="quantityCol"><input type="number" id="qty_input_{{id}}"
-                                data-vendor-id="{{ProductCatalog.supplier_id}}" size="4" min="1" <td
-                                clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
+                        <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
                                 max="{{ProductCatalog.product_current_qty}}" value="{{quantity}}"><br><span
                                 id="error_msg_{{ProductCatalog.id}}" class="text-danger"></span>
                         </td>

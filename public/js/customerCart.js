@@ -21,17 +21,13 @@ $(document).ready(function () {
     $(".delete").on("click", function () {
         var detailID = $(this).data("cart-detail-id");
 
-        var quantity = {
-            id: detailID
-            , quantity: $(`#row-${detailID} #qty_input`).val()
-        };
-
-        $.post(`/api/cart/user`, {
-            type: "PUT",
-            data: quantity
+        /*$.post(`/api/cart/user/${detailID}`, {
+            type: "DELETE"
         }).then(results => {
             console.log(results);
-        });
+        });*/
+
+        console.log(detailID);
     });
 
     $("#place-order").on("click", function (event) {
