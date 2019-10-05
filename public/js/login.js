@@ -23,6 +23,8 @@ $(document).ready(function() {
         console.log("logged in as ", user.userRole, user.userId);
         localStorage.setItem("userId", user.userId);
         localStorage.setItem("userRole", user.userRole);
+        localStorage.setItem("userName", user.userName);
+
 
         switch (user.userRole) {
         case "Vendor":

@@ -1,13 +1,20 @@
 <div class="container">
 
+    <div class="page-title">
+        <h1>My Products</h1>
+    </div>
+
+
     <div class="card-columns">
 
         {{#each productList}}
 
         <div class="card">
-            <img src="{{product_img}}" class="card-img-top productImg">
-            <div class="card-body">
-                <h5 class="card-title">{{product_name}}</h5>
+            <h5 class="card-title">{{product_name}}</h5>
+            <img src="{{product_img}}" class="card-img-top productImg text-center">
+            <hr>
+            <div class="card-body prod-desc">
+
                 <p class="card-text">{{product_description}}</p>
                 <p class="card-text">Available: {{product_current_qty}} of {{product_original_qty}}</p>
                 <p class="card-text">Expiry Date: {{product_expiry_date}}</p>
