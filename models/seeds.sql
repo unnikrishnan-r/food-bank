@@ -31,7 +31,7 @@ VALUES
 ('Jane','abcd',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,now(),now()),
 ('Alex','abcd',2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,now(),now()),
 ('Shopper''s Drug Mart','abcd',1,NULL,'1125 Bloor St E',NULL,'Mississauga','Ontario','L4Y 2N6',0,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSKd6Ipxgi9Jqb2p54bj-zenMXjnK_XbtVsQLR3WnPO_gKqZsgGQ',now(),now()),
-('LobLaws','abcd',1,NULL,'380 The East Mall',NULL,'Etobicoke','Ontario','M9B 6L5',0,'https://can-cdn.azureedge.net/logos/Loblaws.PNG',now(),now()),
+('Loblaws','abcd',1,NULL,'380 The East Mall',NULL,'Etobicoke','Ontario','M9B 6L5',0,'https://can-cdn.azureedge.net/logos/Loblaws.PNG',now(),now()),
 ('Food Basics','abcd',1,NULL,'4141 Dixie Rd',NULL,'Mississauga','Ontario','L4W 1V5',0,'http://community.mis.temple.edu/mday/files/2014/04/food-basics-logo.jpg',now(),now());
 
 
