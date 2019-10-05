@@ -29,7 +29,8 @@ body{
 }
 
 .navbar-toggler{
-    background: #fff !important;
+    color: #fff !important;
+    font-size: 25px;
 }
 
 .header{
@@ -51,12 +52,13 @@ body{
 .description{
     position: absolute;
     top:30%;
-    margin: auto;
+    margin: 0 auto;
     padding: 2em;
     text-shadow: 2px 2px #000000;
 }
 
 .description h1{
+    text-align: center;
     color: #fff;
     font-size: 50px;
 }
@@ -85,7 +87,7 @@ body{
 }
 .main-feature h1{
     color: #4FA47D;
-    margin: 2em;
+    padding-bottom: 75px;
 }
 
 .main-feature img{
