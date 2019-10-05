@@ -27,7 +27,8 @@
 }
 
 .navbar-toggler{
-    background: #fff !important;
+    color: #fff !important;
+    font-size: 25px;
 }
 
 .handlebar-content{
