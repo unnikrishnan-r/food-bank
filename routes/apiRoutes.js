@@ -1,5 +1,6 @@
 var db = require("../models");
 var moment = require("moment");
+var Sequelize = require("sequelize");
 
 module.exports = function (app) {
   // Get all products
@@ -15,10 +16,12 @@ module.exports = function (app) {
       });
   });
 
-  // Get all vendor products
+  // Get all Buyer products
   app.get("/api/products/buyer/:id", function (req, res) {
-    console.log("Get All vendor products");
-    db.ProductCatalog.findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }] })
+    console.log("Get All products for Buyer dashboard, id is Vendors");
+    db.ProductCatalog.findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id }}],
+    order: [[Sequelize.col('ProductCatalog.product_perishable'),'DESC'],
+      Sequelize.col('ProductCatalog.product_expiry_date')] })
       .then(productList => {
         productList.map(product => {
           const productObj = product.toJSON();
@@ -45,7 +48,9 @@ module.exports = function (app) {
 
   app.get("/api/products/vendor/:id", function (req, res) {
     console.log("Get All vendor products");
-    db.ProductCatalog.findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }] })
+    db.ProductCatalog.findAll({ include: [{ model: db.User, as: "Vendor", where: { id: req.params.id }}],
+    order: [[Sequelize.col('ProductCatalog.product_perishable'),'DESC'],
+      Sequelize.col('ProductCatalog.product_expiry_date')] })
       .then(productList => {
         productList.map(product => {
           const productObj = product.toJSON();
