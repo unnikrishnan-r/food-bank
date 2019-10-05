@@ -100,13 +100,16 @@ color: #fff;
     }
 
     .card-title{
-        font-size: 30px;
+        font-size: 20px;
     }
     .productImg{
         max-width: 100%;
     }
     .prod-desc{
-        font-size: 20px;
+        font-size: 15px;
+    }
+    p{
+        padding: 2px;
     }
     
   }
