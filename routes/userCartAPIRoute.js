@@ -19,34 +19,41 @@ module.exports = function (app) {
     {
         "cart_owner_id": 1,       
         "cart_status": "Open",
-        "product_id": 25,
-        "quantity": 1
+        "UserCartDetail" : {
+          "product_id": 25,
+          "quantity": 1
+        }
+       
       } 
   */
   app.post("/api/cart/user", function (req, res) {
     console.log("Create a Cart");
 
-    db.sequelizeConnection.transaction(transaction => {
-      return db.UserCartHeader.findOrCreate({ where: { cart_owner_id: req.body.cart_owner_id }, defaults: { cart_owner_id: req.body.cart_owner_id, cart_status: req.body.cart_status }, transaction }).then(createdCart => {
+    var cartDetails = req.body.UserCartDetail;
 
-        console.log("Find/Create successful", createdCart[0]);
+    db.sequelizeConnection.transaction(t => {
 
-        db.UserCartDetail.create({ cart_id: createdCart[0].id, product_id: req.body.product_id, quantity: req.body.quantity }, transaction)
-          .then(createCartDetail => {
-            console.log(createCartDetail);
+      //Create an Cart Header
+      return db.UserCartHeader.findOrCreate({ where: { cart_owner_id: req.body.cart_owner_id }, defaults: { cart_owner_id: req.body.cart_owner_id, cart_status: req.body.cart_status }, transaction: t }).then(createdCart => {
+        var orderPromises = [];
 
-            res.status(200).send(createdCart);
-          })
-          .catch(function (error) {
-            console.log(error);
-            res.sendStatus(400);
-          });
+        //Create multiple cart details
+        for (let i = 0; i < cartDetails.length; i++) {
+          orderPromises.push(
+            db.UserCartDetail.create({ cart_id: createdCart[0].id, product_id: req.body.product_id, quantity: req.body.quantity }, { transaction: t })
+          );
+        }
 
-      }).catch(function (error) {
-        console.log(error);
-        res.sendStatus(400);
-      })
+        return Sequelize.Promise.all(orderPromises);
+
+      });
+    }).then(() => {
+      res.sendStatus(200);
+    }).catch(function (error) {
+      console.log(error);
+      res.sendStatus(400);
     });
+
   });
 
   // Updates a cart item

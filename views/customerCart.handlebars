@@ -1,23 +1,49 @@
-<form>
-    <table>
-        <thead>
-            <th>Product</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th></th>
-        </thead>
-        {{#each UserCartDetails}}
-        <tr>
-            <td>{{ProductCatalog.product_name}} </td>
-            <td>{{ProductCatalog.product_description}} </td>
-            <td id="row-{{id}}"><input type="text" id="qty_input" size="4" maxlength="4" placeholder="Qty"
-                    class="form-control mb-2 mr-2" value="{{quantity}}"></td>
-            <td>
-                <button type="button" data-cart-detail-id="{{id}}" class="update">Update</button>
-                <button type="button" data-cart-detail-id="{{id}}" class="delete">Delete</button>
-            </td>
-        </tr>
-        {{/each}}
-        </tbody>
-    </table>
-</form>
+<div class="container">
+    <div class="card">
+
+        <div class="card-header">
+            <h2>Cart</h2>
+        </div>
+        <div class="card-body">
+
+            <p id="message" class="text-danger"></p>
+
+            <form id="orderForm">
+                <table class="table">
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Expiry Date</th>
+                        <th>Available</th>
+                        <th>Perishable</th>
+                        <th>Order Quantity</th>
+                    </tr>
+                    {{#each UserCartDetails}}
+                    <tr>
+                        <td class="selectCol"><input type="checkbox" id="select_input_{{id}}"
+                                data-product-id="{{ProductCatalog.id}}" class="selectOrder"></td>
+                        <td class="w-25"><img src="{{ProductCatalog.product_img}}" class="img-fluid"></td>
+                        <td>{{ProductCatalog.product_name}}</td>
+                        <td>{{ProductCatalog.product_description}}</td>
+                        <td>{{#if ProductCatalog.product_perishable}}{{ProductCatalog.product_expiry_date}}{{/if}}</td>
+                        <td>{{ProductCatalog.product_current_qty}}</td>
+                        <td>{{#if ProductCatalog.product_perishable}}Y{{else}}N{{/if}}</td>
+                        <td clas="quantityCol"><input type="number" id="qty_input_{{id}}" size="4" min="1"
+                                max="{{ProductCatalog.product_current_qty}}"><br><span
+                                id="error_msg_{{ProductCatalog.id}}" class="text-danger"></span>
+                        </td>
+                        <td>
+                            <button type="button" data-cart-detail-id="{{id}}" class="update">Update</button>
+                            <button type="button" data-cart-detail-id="{{id}}" class="delete">Delete</button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </form>
+
+        </div>
+    </div>
+</div>
