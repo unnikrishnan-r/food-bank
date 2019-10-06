@@ -254,4 +254,18 @@ module.exports = function (app) {
       });
   });
 
+  //Get count of orders with a particular Product Id
+  app.get("/api/countProductsInOrder/:productId", function(req, res) {
+    db.OrderDetail.count({
+      where: { product_id: req.params.productId },
+      include: [
+        {
+          model: db.OrderHeader,
+          where: {
+            order_status: ["Open", "Ready for Pickup"]
+          }
+        }
+      ]
+    }).then(openOrderCount => res.json({ openOrderCount: openOrderCount }));
+  });
 };

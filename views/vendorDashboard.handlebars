@@ -10,7 +10,11 @@
         {{#each productList}}
 
         <div class="card vh-100">
+            <button type="submit" class="btn btn-danger btn-sm float-right delete-product" product-id="{{id}}" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             <h5 class="card-title text-truncate">{{product_name}}</h5>
+
             <img src="{{product_img}}" class="card-img-top productImg text-center">
             <hr>
             <div class="card-body prod-desc">
@@ -25,5 +29,18 @@
         {{/each}}
 
     </div>
-
+    <div class="modal" id="unableToDelete" tabindex="-1" role="dialog" aria-labelledby="unableToDelete" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span id=productDeleteMessage></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{{!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
+<script src="/js/vendor.js"></script>
