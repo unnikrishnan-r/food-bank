@@ -80,6 +80,7 @@ body{
  .side-nav-col{
      min-width: 200px;
      margin-left: 15px;
+     z-index: 100;
  }
 
  .side-nav{
