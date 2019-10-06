@@ -52,6 +52,10 @@ body{
     padding: 15px;
 }
 
+.fa-times{
+    color: #FF1654;
+    font-size: 17px;
+}
 .card-columns {
     column-count: 4;
 }
