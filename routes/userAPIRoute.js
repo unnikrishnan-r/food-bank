@@ -60,7 +60,16 @@ module.exports = function (app) {
               return productObj;
             });
 
-            res.render("customerDashboard", { layout: "buyer", userList: vendorList, productList: productList });
+            var vendor;
+
+            if (productList.length > 0) {
+              vendor = productList[0].Vendor;
+            }
+            else {
+              vendor = { id: 0, user_name: '' }
+            }
+
+            res.render("customerDashboard", { layout: "buyer", userList: vendorList, productList: productList, vendor: vendor });
           })
             .catch(error => {
               console.error(error);

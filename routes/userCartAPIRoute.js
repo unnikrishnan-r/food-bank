@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 var db = require("../models");
+var moment = require("moment");
 var Sequelize = require("sequelize");
 var Op = Sequelize.Op;
 
@@ -7,18 +8,19 @@ module.exports = function (app) {
   // Get cart
   app.get("/api/cart/user/:id", function (req, res) {
     console.log("Get Cart");
-    db.UserCartHeader.findAll({ where: { cart_owner_id: req.params.id }, include: [{ model: db.UserCartDetail, include: [db.ProductCatalog] }] })
+    db.UserCartHeader.findAll({ where: { cart_owner_id: req.params.id }, include: [{ model: db.UserCartDetail, include: [{ model: db.ProductCatalog, include: [{ model: db.User, as: "Vendor" }] }] }] })
       .then(cartList => {
 
-        if (cartList && cartList.UserCartDetail) {
-          cartList.UserCartDetail = cartList.UserCartDetail.map(order => {
-            const orderObj = order.toJSON();
-            orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
-            return orderObj;
-          });
+        var vendor;
+
+        if (cartList.length > 1 && cartList[0].dataValues.UserCartDetails.length > 0) {
+          vendor = cartList[0].dataValues.UserCartDetails[0].dataValues.ProductCatalog.dataValues.Vendor.dataValues;
+        }
+        else {
+          vendor = { id: 0 };
         }
 
-        res.render("customerCart", { layout: "buyer", cart: cartList });
+        res.render("customerCart", { layout: "buyer", cart: cartList, vendor: vendor });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -63,7 +65,7 @@ module.exports = function (app) {
 
         //Create multiple cart details
         for (let i = 0; i < cartDetails.length; i++) {
-          console.log(cartDetails[i].product_id);
+
           orderPromises.push(
             db.UserCartDetail.findOrCreate({ where: { [Op.and]: [{ cart_id: createdCart[0].id }, { product_id: cartDetails[i].product_id }] }, defaults: { cart_id: createdCart[0].id, product_id: cartDetails[i].product_id, quantity: cartDetails[i].quantity }, transaction: t })
           );
@@ -74,9 +76,6 @@ module.exports = function (app) {
           var updatePromises = [];
 
           for (let k = 0; k < order.length; k++) {
-
-            console.log(order[k], order[k][0].dataValues, order[k][0]._options.isNewRecord);
-            console.log(order[k][0].dataValues.createdAt === order[k][0].dataValues.updatedAt)
 
             if (!order[k][0]._options.isNewRecord) {
               let newQty = parseInt(order[k][0].dataValues.quantity) + parseInt(cartDetails[k].quantity);
@@ -124,9 +123,9 @@ module.exports = function (app) {
   });
 
   // Delete a cart using id
-  app.delete("/api/cart/user", function (req, res) {
+  app.delete("/api/cart/user/:id", function (req, res) {
     console.log("Delete a cart");
-    db.UserCartHeader.destroy({ where: { id: req.body.id } })
+    db.UserCartHeader.destroy({ where: { cart_owner_id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {

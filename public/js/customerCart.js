@@ -15,7 +15,10 @@ $(document).ready(function () {
             type: "PUT",
             data: cartDetail
         }).then(results => {
-            console.log(results);
+            console.log($(`#error_msg_${detailID}`));
+            $(`#error_msg_${detailID}`).text("Updated");
+        }).fail(function () {
+            console.log("Error");
         });
     });
 
@@ -25,18 +28,17 @@ $(document).ready(function () {
         $.ajax(`/api/cart/item/${detailID}`, {
             type: "DELETE"
         }).then(results => {
-            console.log(results);
             location.reload();
+        }).fail(function () {
+            console.log("Error");
         });
-
-        console.log(detailID);
     });
 
-    $("#place-order").on("click", function (event) {
+    $(".place-order").on("click", function (event) {
         event.stopImmediatePropagation();
         event.preventDefault();
 
-        let elements = $(".selectOrder:checked");
+        let elements = $(".qtyInput");
 
         const vendorID = $(this).data("vendor-id");
 
@@ -48,10 +50,14 @@ $(document).ready(function () {
             OrderDetail: []
         }
 
+
         for (let element of elements) {
             let productID = $(element).data("product-id");
-            let qtyInputID = "#qty_input_" + productID;
-            let qtyElement = document.getElementById("qty_input_" + productID);
+            let itemID = $(element).data("cart-detail-id");
+            let qtyInputID = element.id;
+
+            let qtyElement = document.getElementById(qtyInputID);
+
             let quantity = qtyElement.value;
 
             qtyElement.required = true;
@@ -69,10 +75,12 @@ $(document).ready(function () {
             newOrder.OrderDetail.push(newOrderDetail);
         }
 
+        console.log(newOrder);
+
         var form = document.getElementById("orderForm");
 
         if (form.checkValidity()) {
-            /*$.ajax({
+            $.ajax({
                 type: "POST",
                 url: "/api/orders",
                 data: JSON.stringify(newOrder),
@@ -80,11 +88,10 @@ $(document).ready(function () {
             })
                 .then(data => {
                     $("#orderSubmitted").modal();
-
                 })
                 .fail(function () {
                     console.log("Error");
-                });*/
+                });
         }
         else {
             return;
@@ -93,6 +100,14 @@ $(document).ready(function () {
     });
 
     $('#orderSubmitted').on('hidden.bs.modal', function (e) {
-        location.reload();
+        let userID = localStorage.getItem("userId");
+
+        $.ajax(`/api/cart/user/${userID}`, {
+            type: "DELETE"
+        }).then(results => {
+            location.reload();
+        }).fail(function () {
+            console.log("Error");
+        });
     })
 });
