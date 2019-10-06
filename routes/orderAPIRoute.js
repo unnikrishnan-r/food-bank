@@ -134,12 +134,14 @@ module.exports = function (app) {
     console.log("Create an order");
 
     var orderDetails = req.body.OrderDetail;
+    var orderHeader;
 
     db.sequelizeConnection.transaction(t => {
 
       //Create an Order Header
       return db.OrderHeader.create(req.body, { transaction: t })
         .then(createdOrder => {
+          orderHeader = createdOrder;
           var orderPromises = [];
 
           //Create multiple order details
@@ -177,7 +179,7 @@ module.exports = function (app) {
 
         });
     }).then(() => {
-      res.sendStatus(200);
+      res.json(orderHeader);
     }).catch(function (error) {
       console.log(error);
       res.sendStatus(400);
@@ -223,7 +225,7 @@ module.exports = function (app) {
   });
 
   // Get an Unique Order
-  app.get("/api/uniqueorder/:id", function(req, res) {
+  app.get("/api/uniqueorder/:id", function (req, res) {
     console.log("Get an Unique");
 
     db.OrderHeader.findAll({
@@ -246,7 +248,7 @@ module.exports = function (app) {
           res.json(orderObj);
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
         res.sendStatus(500);
       });

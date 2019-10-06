@@ -13,7 +13,7 @@ module.exports = function (app) {
 
         var vendor;
 
-        if (cartList.length > 1 && cartList[0].dataValues.UserCartDetails.length > 0) {
+        if (cartList.length > 0 && cartList[0].dataValues.UserCartDetails.length > 0) {
           vendor = cartList[0].dataValues.UserCartDetails[0].dataValues.ProductCatalog.dataValues.Vendor.dataValues;
         }
         else {
@@ -21,6 +21,27 @@ module.exports = function (app) {
         }
 
         res.render("customerCart", { layout: "buyer", cart: cartList, vendor: vendor });
+      }).catch(function (error) {
+        console.log(error);
+        res.sendStatus(500);
+      });
+  });
+
+  app.get("/api/cart/user/:id/vendor", function (req, res) {
+    console.log("Get Cart");
+    db.UserCartHeader.findAll({ where: { cart_owner_id: req.params.id }, include: [{ model: db.UserCartDetail, include: [{ model: db.ProductCatalog, include: [{ model: db.User, as: "Vendor" }] }] }] })
+      .then(cartList => {
+
+        var vendor;
+
+        if (cartList.length > 0 && cartList[0].dataValues.UserCartDetails.length > 0) {
+          vendor = cartList[0].dataValues.UserCartDetails[0].dataValues.ProductCatalog.dataValues.Vendor.dataValues;
+        }
+        else {
+          vendor = { id: 0 };
+        }
+
+        res.json(vendor);
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);

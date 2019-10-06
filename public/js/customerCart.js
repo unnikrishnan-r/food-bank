@@ -87,6 +87,7 @@ $(document).ready(function () {
                 contentType: "application/json"
             })
                 .then(data => {
+                    $("#orderNo").text(data.id);
                     $("#orderSubmitted").modal();
                 })
                 .fail(function () {
