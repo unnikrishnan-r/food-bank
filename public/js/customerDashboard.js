@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
 
-  $("#place-order").on("click", function (event) {
+  $(".place-order").on("click", function (event) {
     event.stopImmediatePropagation();
     event.preventDefault();
 

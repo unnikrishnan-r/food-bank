@@ -77,35 +77,29 @@ body{
  color: #fff;
  }
  
+ .side-nav-col{
+     min-width: 200px;
+     margin-left: 15px;
+ }
 
  .side-nav{
-     background-color: #f4f4f4;
+     background-color: #ffffff;
  }
  .side-nav .nav-link{
      color: rgb(83, 83, 83)
  }
   
  @media (max-width: 1200px) { 
-     .card-columns {
-    
-     column-count: 3;
-     }
+
   }
  
  
  @media (max-width: 768px) { 
-     .card-columns {
-    
-     column-count: 2;
-     }
+
   }
  
   @media (max-width: 576px) { 
-     .card-columns {
-    
-         column-count: 1;
-     }
- 
+
      .card-title{
          font-size: 20px;
      }
