@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $("#save-changes").prop('disabled', true);
   $(".dropdown-menu a").click(function() {
     $(this)
       .parents(".dropdown")
@@ -8,7 +9,11 @@ $(document).ready(function() {
       .parents(".dropdown")
       .find(".btn")
       .val($(this).data("value"));
-  });
+    $("#save-changes").prop('disabled', false);
+    $("#save-changes").removeClass('btn-secondary');
+    $("#save-changes").addClass('btn-success');
+
+    });
 
   $("#save-changes").on("click", function (event) {
     event.stopImmediatePropagation();
