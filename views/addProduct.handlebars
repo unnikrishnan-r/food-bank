@@ -8,14 +8,17 @@
                 <div class="card-body">
 
 
-                    <form class="form create-form" role="form" autocomplete="off">
+                    <form class="form create-form needs-validation" role="form" autocomplete="off" novalidate>
 
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-lable form-control-lable" for="productName">Product Name
                             </label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" id="productName" name="productName">
+                                <input class="form-control" type="text" id="productName" name="productName" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Required
                             </div>
                         </div>
 
@@ -23,7 +26,10 @@
                             <label class="col-lg-3 col-form-lable form-control-lable" for="productDesc">Product
                                 Description </label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" id="productDesc" name="productDesc">
+                                <input class="form-control" type="text" id="productDesc" name="productDesc" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Required
                             </div>
                         </div>
 
@@ -31,7 +37,10 @@
                             <label class="col-lg-3 col-form-lable form-control-lable" for="productImg">Product Image
                                 Link </label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" id="productImg" name="productImg">
+                                <input class="form-control" type="text" id="productImg" name="productImg" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Required
                             </div>
                         </div>
 
@@ -42,6 +51,9 @@
                                 <input class="form-control" type="radio" name="perishable" value="1" checked> Yes
                                 <input class="form-control" type="radio" name="perishable" value="0"> No
                             </div>
+                            <div class="invalid-feedback">
+                                Required
+                            </div>
                         </div>
 
                         {{!-- date --}}
@@ -49,7 +61,10 @@
                             <label class="col-lg-3 col-form-lable form-control-lable" for="expiryDate">Expiry Date
                             </label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="date" id="expiryDate" name="expiryDate">
+                                <input class="form-control" type="date" id="expiryDate" name="expiryDate" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Required
                             </div>
                         </div>
 
@@ -59,11 +74,14 @@
                             <label class="col-lg-3 col-form-lable form-control-lable" for="originalQty">Quantity
                             </label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="number" id="originalQty" name="originalQty">
+                                <input class="form-control" type="number" id="originalQty" name="originalQty" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Required
                             </div>
                         </div>
 
-                        <button class="main-btn btn btn-secondary" id="reset-btn" type="reset">Cancel</button>
+                        <button class="main-btn btn btn-secondary" id="reset-btn" type="reset">Clear</button>
                         <button class="main-btn btn btn-primary" id="add-product-btn" type="submit">Add
                             Product</button>
                     </form>
