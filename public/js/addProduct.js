@@ -7,6 +7,8 @@ $(document).ready(function () {
 
   today = yyyy + "/" + mm + "/" + dd;
 
+  $("#expiryDate").attr("min", today.replace(new RegExp("/", 'g'), "-"));
+
 
   //if item is perishable show expiry date
   function expiryDateToggle() {
@@ -23,6 +25,15 @@ $(document).ready(function () {
 
   $("#add-product-btn").on("click", function (event) {
     event.preventDefault();
+
+    //Gets form object
+    let form = $(".needs-validation")[0];
+
+    //Prevent form from being submitted if there's a validation error
+    if (form.checkValidity() === false) {
+      form.classList.add("was-validated");
+      return;
+    }
 
     //default date if not perishable
     var expiryDate = $("#expiryDate").val();
