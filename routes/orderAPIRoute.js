@@ -134,12 +134,14 @@ module.exports = function (app) {
     console.log("Create an order");
 
     var orderDetails = req.body.OrderDetail;
+    var orderHeader;
 
     db.sequelizeConnection.transaction(t => {
 
       //Create an Order Header
       return db.OrderHeader.create(req.body, { transaction: t })
         .then(createdOrder => {
+          orderHeader = createdOrder;
           var orderPromises = [];
 
           //Create multiple order details
@@ -166,8 +168,6 @@ module.exports = function (app) {
                 let currentQty = products[k].product_current_qty;
                 let newQty = currentQty - orderDetails[k].quantity;
 
-                console.log(currentQty, newQty);
-
                 updatePromises.push(db.ProductCatalog.update({ product_current_qty: newQty }, { where: { id: products[k].id }, transaction: t }));
               }
 
@@ -179,29 +179,11 @@ module.exports = function (app) {
 
         });
     }).then(() => {
-      res.sendStatus(200);
+      res.json(orderHeader);
     }).catch(function (error) {
       console.log(error);
       res.sendStatus(400);
     });
-
-    /*db.OrderHeader.create(req.body)
-      .then(createdOrder => {
-
-        req.body.OrderDetail.forEach(data => {
-          db.OrderDetail.create({ order_id: createdOrder.id, product_id: data.product_id, quantity: data.quantity })
-            .then(createdOrderDetail => {
-              db.ProductCatalog.update({ product_current_qty: Sequelize.col('ProductCatalog.product_current_qty') - createdOrderDetail.quantity }, { where: { id: createdOrderDetail.product_id } })
-            });
-        });
-
-      }).then(() => {
-        res.sendStatus(200);
-      })
-      .catch(function (error) {
-        console.log(error);
-        res.sendStatus(400);
-      });*/
 
   });
 
@@ -243,7 +225,7 @@ module.exports = function (app) {
   });
 
   // Get an Unique Order
-  app.get("/api/uniqueorder/:id", function(req, res) {
+  app.get("/api/uniqueorder/:id", function (req, res) {
     console.log("Get an Unique");
 
     db.OrderHeader.findAll({
@@ -266,10 +248,24 @@ module.exports = function (app) {
           res.json(orderObj);
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
         res.sendStatus(500);
       });
   });
 
+  //Get count of orders with a particular Product Id
+  app.get("/api/countProductsInOrder/:productId", function(req, res) {
+    db.OrderDetail.count({
+      where: { product_id: req.params.productId },
+      include: [
+        {
+          model: db.OrderHeader,
+          where: {
+            order_status: ["Open", "Ready for Pickup"]
+          }
+        }
+      ]
+    }).then(openOrderCount => res.json({ openOrderCount: openOrderCount }));
+  });
 };

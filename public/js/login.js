@@ -4,11 +4,9 @@ $(document).ready(function() {
     console.log("Local storage cleared")
     event.preventDefault();
     var user = {
-      // eslint-disable-next-line camelcase
       user_name: $("#username")
         .val()
         .trim(),
-      // eslint-disable-next-line camelcase
       user_password: $("#password")
         .val()
         .trim()
@@ -27,19 +25,20 @@ $(document).ready(function() {
 
 
         switch (user.userRole) {
-        case "Vendor":
-          location.href = `/api/products/vendor/${user.userId}`;
-          break;
-        case "Buyer":
-          location.href = `/api/users/Vendor`;
-          break;
+          case "Vendor":
+            location.href = `/api/products/vendor/${user.userId}`;
+            break;
+          case "Buyer":
+            location.href = `/api/users/Vendor`;
+            break;
 
-        default:
-          console.log("Default");
-          break;
+          default:
+            console.log("Default");
+            break;
         }
       } else {
         console.log("Log in failed");
+          $("#buttonAlert").addClass("show");
       }
     });
   });
