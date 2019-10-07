@@ -6,6 +6,9 @@
         </div>
         <div class="card-body">
             <form id="orderForm">
+                <button type="submit" data-vendor-id="{{vendor.id}}" class="btn btn-primary mb-3 place-order">Submit
+                    Order</button>
+
                 <table class="table">
                     <tr>
                         <th></th>
@@ -28,7 +31,7 @@
                         <td>{{#if ProductCatalog.product_perishable}}Y{{else}}N{{/if}}</td>
                         <td><input type="number" id="qty_input_{{id}}" size="4" min="1"
                                 max="{{ProductCatalog.product_current_qty}}" value="{{quantity}}" class="qtyInput"
-                                data-product-id="{{ProductCatalog.id}}" data-cart-detail-id="{{id}}"><br><span
+                                data-product-id="{{ProductCatalog.id}}" data-cart-detail-id="{{id}}" required><br><span
                                 id="error_msg_{{id}}" class="text-danger"></span>
                         </td>
                         <td>

@@ -4,8 +4,14 @@ $(document).ready(function () {
 
     $(".update").on("click", function () {
         var detailID = $(this).data("cart-detail-id");
-        var quantity = $(`#qty_input_${detailID}`).val();
-        quantity = parseInt(quantity);
+        let qtyElement = document.getElementById("qty_input_" + detailID);
+        let quantity = qtyElement.value;
+
+        if (!qtyElement.checkValidity()) {
+            let qtyErrMsgID = "#error_msg_" + detailID;
+            $(qtyErrMsgID).text(qtyElement.validationMessage);
+            return;
+        }
 
         var cartDetail = {
             quantity: quantity
@@ -74,8 +80,6 @@ $(document).ready(function () {
 
             newOrder.OrderDetail.push(newOrderDetail);
         }
-
-        console.log(newOrder);
 
         var form = document.getElementById("orderForm");
 

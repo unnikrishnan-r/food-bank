@@ -20,7 +20,6 @@ $(document).ready(function () {
 
     $.ajax(`/api/cart/user/${userID}/vendor`)
       .then(vendor => {
-        console.log(vendor);
 
         //Cart is empty or the cart items are for the same vendor
         if (vendor.id === 0 || vendorID === vendor.id) {
@@ -42,7 +41,7 @@ $(document).ready(function () {
               let qtyErrMsgID = "#error_msg_" + productID;
               $(qtyErrMsgID).text(qtyElement.validationMessage);
             }
-            
+
             var newCartDetail = {
               product_id: productID,
               quantity: quantity
@@ -51,9 +50,9 @@ $(document).ready(function () {
             newCart.UserCartDetail.push(newCartDetail);
           }
 
-          // var form = document.getElementById("orderForm");
+          var form = document.getElementById("orderForm");
 
-          // if (form.checkValidity()) {
+          if (form.checkValidity()) {
 
             $.ajax({
               type: "POST",
@@ -68,10 +67,10 @@ $(document).ready(function () {
               .fail(function () {
                 console.log("Error while creating cart");
               });
-          // }
-          // else {
-          //   return;
-          // }
+          }
+          else {
+            return;
+          }
         }
         else if (vendor.id > 0) {
           $("#vendorName").text(vendor.user_name);
