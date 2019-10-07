@@ -158,3 +158,8 @@ a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
 }
+
+.fit-image{
+    width: 100%;
+    object-fit: cover;
+}
