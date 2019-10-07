@@ -21,8 +21,8 @@ module.exports = function (app) {
     console.log("Get All products for Buyer dashboard, id is Vendors");
     db.ProductCatalog.findAll({
       include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }],
-      order: [[Sequelize.col('ProductCatalog.product_perishable'), 'DESC'],
-      Sequelize.col('ProductCatalog.product_expiry_date')]
+      order: [[Sequelize.col("ProductCatalog.product_perishable"), "DESC"],
+        Sequelize.col("ProductCatalog.product_expiry_date")]
     })
       .then(productList => {
         productList.map(product => {
@@ -35,9 +35,8 @@ module.exports = function (app) {
 
         if (productList.length > 0) {
           vendor = productList[0].Vendor;
-        }
-        else {
-          vendor = { id: 0 }
+        } else {
+          vendor = { id: 0 };
         }
 
         res.render("customerDashboard", { layout: "buyer", userList: {}, productList: productList, vendor: vendor });
@@ -52,8 +51,8 @@ module.exports = function (app) {
     console.log("Get All vendor products");
     db.ProductCatalog.findAll({
       include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }],
-      order: [[Sequelize.col('ProductCatalog.product_perishable'), 'DESC'],
-      Sequelize.col('ProductCatalog.product_expiry_date')]
+      order: [[Sequelize.col("ProductCatalog.product_perishable"), "DESC"],
+        Sequelize.col("ProductCatalog.product_expiry_date")]
     })
       .then(productList => {
         productList.map(product => {
@@ -66,9 +65,8 @@ module.exports = function (app) {
 
         if (productList.length > 0) {
           vendor = productList[0].Vendor;
-        }
-        else {
-          vendor = { id: 0 }
+        } else {
+          vendor = { id: 0 };
         }
 
         res.render("vendorDashboard", { layout: "vendor", userList: {}, productList: productList, vendor: vendor });

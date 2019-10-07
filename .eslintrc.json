@@ -2,7 +2,16 @@
   "env": {
       "browser": true,
       "commonjs": true,
+      "es6": true,
       "node": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
   "rules": {
       "no-duplicate-case":"error",
@@ -20,10 +29,10 @@
       "no-trailing-spaces": "error",
       "default-case": "error",
       "no-fallthrough": "error",
-      "no-unused-vars": "error",
+      "no-unused-vars": ["error", { "args": "none" }],
       "no-use-before-define": "error",
       "no-redeclare": "error",
-      "camelcase": "error",
+      // "camelcase": "error",
       "brace-style": "error",
       "indent": [
           "error",

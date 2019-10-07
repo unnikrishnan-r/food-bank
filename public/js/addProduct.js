@@ -7,14 +7,14 @@ $(document).ready(function () {
 
   today = yyyy + "/" + mm + "/" + dd;
 
-  $("#expiryDate").attr("min", today.replace(new RegExp("/", 'g'), "-"));
+  $("#expiryDate").attr("min", today.replace(new RegExp("/", "g"), "-"));
 
 
   //if item is perishable show expiry date
   function expiryDateToggle() {
     $("#expiryDate").prop("disabled", false);
     $("input[type=radio]").click(function () {
-      if ($(this).prop("value") == 1) {
+      if ($(this).prop("value") === 1) {
         $("#expiryDate").prop("disabled", false);
       } else {
         $("#expiryDate").prop("disabled", true);
@@ -43,23 +43,14 @@ $(document).ready(function () {
     }
 
     var newProduct = {
-      // eslint-disable-next-line camelcase
       product_name: $("#productName").val().trim(),
-      // eslint-disable-next-line camelcase
       product_description: $("#productDesc").val().trim(),
-      // eslint-disable-next-line camelcase
       product_img: $("#productImg").val().trim(),
-      // eslint-disable-next-line camelcase
       product_expiry_date: expiryDate,
-      // eslint-disable-next-line camelcase
       product_perishable: $("[name=perishable]:checked").val().trim(),
-      // eslint-disable-next-line camelcase
       product_original_qty: $("#originalQty").val().trim(),
-      // eslint-disable-next-line camelcase
       product_current_qty: $("#originalQty").val().trim(),
-      // eslint-disable-next-line camelcase
       supplier_id: localStorage.getItem("userId"),
-      // eslint-disable-next-line camelcase
       product_posted_date: today
     };
 
