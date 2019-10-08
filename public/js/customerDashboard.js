@@ -65,8 +65,7 @@ $(document).ready(function () {
               .fail(function () {
                 console.log("Error while creating cart");
               });
-          }
-          else {
+          } else {
             return;
           }
         }

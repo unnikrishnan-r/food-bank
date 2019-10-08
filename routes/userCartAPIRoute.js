@@ -169,13 +169,6 @@ module.exports = function (app) {
         res.sendStatus(500);
       });
 
-    /*db.UserCartDetail.destroy({ where: { id: req.params.id } })
-      .then(affectedCount => {
-        res.status(200).send(affectedCount + " deleted");
-      }).catch(function (error) {
-        console.log(error);
-        res.sendStatus(500);
-      });*/
   });
 
   // Delete a cart using id
