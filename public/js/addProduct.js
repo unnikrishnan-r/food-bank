@@ -25,6 +25,7 @@ $(document).ready(function () {
 
   $("#add-product-btn").on("click", function (event) {
     event.preventDefault();
+    event.stopPropagation();
 
     //Gets form object
     let form = $(".needs-validation")[0];

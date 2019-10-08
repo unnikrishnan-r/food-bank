@@ -23,47 +23,52 @@
             <h2>{{vendor.user_name}} Products</h2>
         </div>
 
-        {{!-- horizontal cards--}}
-        {{#each productList}}
-        <div class="card mb-4">
-            <div class="row no-gutters">
-                <div class="col-md-3">
-                    <img src="{{product_img}}" alt="{{product_name}}" class="card-img productImg text-center">
-                </div>
-                <div class="col-md-6">
-                    <h5 class="card-title">
-                        {{product_name}}
-                    </h5>
-                    <div class="card-body prod-desc">
-                        <p class="card-text">{{product_description}}</p>
-                        <p class="card-text"><small class="text-muted">
-                                Expiry Date:{{product_expiry_date}} Perishable:
-                                {{#if product_perishable}}Y{{else}}N{{/if}} Available: {{product_current_qty}} of
-                                {{product_original_qty}}
-                            </small>
-                        </p>
-                        <p id="message" class="text-danger"></p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card-body orderDetails">
-                        <div class="selectCol py-10">Select <input type="checkbox" id="select_input_{{id}}"
-                                data-product-id="{{id}}" class="selectOrder">
-                        </div>
-                        <div class="quantityCol py-10">Quantity </span><input type="number" id="qty_input_{{id}}"
-                                size="4" min="1" max="{{product_current_qty}}"><br><span id="error_msg_{{id}}"
-                                class="text-danger">
-                        </div>
+        <form id="orderForm">
+            <button type="submit" data-vendor-id="{{vendor.id}}" class="place-order btn btn-warning mb-3  py-10">Add To
+                Cart</button>
 
+            <p id="message"></p>
+
+            {{!-- horizontal cards--}}
+            {{#each productList}}
+            <div class="card mb-4">
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <img src="{{product_img}}" alt="{{product_name}}" class="card-img productImg text-center">
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="card-title">
+                            {{product_name}}
+                        </h5>
+                        <div class="card-body prod-desc">
+                            <p class="card-text">{{product_description}}</p>
+                            <p class="card-text"><small class="text-muted">
+                                    Expiry Date: {{product_expiry_date}} Perishable:
+                                    {{#if product_perishable}}Y{{else}}N{{/if}} Available: {{product_current_qty}} of
+                                    {{product_original_qty}}
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card-body orderDetails">
+                            <div class="selectCol py-10">Select <input type="checkbox" id="select_input_{{id}}"
+                                    data-product-id="{{id}}" class="selectOrder">
+                            </div>
+                            <div class="quantityCol py-10">Quantity </span><input type="number" id="qty_input_{{id}}"
+                                    size="4" min="1" max="{{product_current_qty}}"><br><span id="error_msg_{{id}}"
+                                    class="text-danger">
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        {{/each}}
-        <button type="submit" data-vendor-id="{{vendor.id}}" class="place-order btn btn-warning mb-3  py-10">Add To
-            Cart</button>
-
+            {{/each}}
+            <button type="submit" data-vendor-id="{{vendor.id}}" class="place-order btn btn-warning mb-3  py-10">Add To
+                Cart</button>
+        </form>
     </div>
 </div>
 

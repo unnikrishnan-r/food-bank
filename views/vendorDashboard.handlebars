@@ -21,7 +21,7 @@
 
                 <p class="card-text">{{product_description}}</p>
                 <p class="card-text">Available: {{product_current_qty}} of {{product_original_qty}}</p>
-                <p class="card-text">Expiry Date: {{product_expiry_date}}</p>
+                <p class="card-text">Expiry Date: {{#if product_perishable}}{{product_expiry_date}}{{/if}}</p>
                 <p class="card-text">Perishable: {{#if product_perishable}}Y{{else}}N{{/if}}</p>
 
             </div>

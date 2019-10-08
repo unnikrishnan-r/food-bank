@@ -18,7 +18,6 @@ $(document).ready(function () {
 
     $.ajax(`/api/cart/user/${userID}/vendor`)
       .then(vendor => {
-        console.log(vendor);
 
         //Cart is empty or the cart items are for the same vendor
         if (vendor.id === 0 || vendorID === vendor.id) {
@@ -49,27 +48,26 @@ $(document).ready(function () {
             newCart.UserCartDetail.push(newCartDetail);
           }
 
-          // var form = document.getElementById("orderForm");
+          var form = document.getElementById("orderForm");
 
-          // if (form.checkValidity()) {
+          if (form.checkValidity()) {
 
-          $.ajax({
-            type: "POST",
-            url: "/api/cart/user",
-            data: JSON.stringify(newCart),
-            contentType: "application/json"
-          })
-            .then(data => {
-              $("#orderSubmitted").modal();
-
+            $.ajax({
+              type: "POST",
+              url: "/api/cart/user",
+              data: JSON.stringify(newCart),
+              contentType: "application/json"
             })
-            .fail(function () {
-              console.log("Error while creating cart");
-            });
-          // }
-          // else {
-          //   return;
-          // }
+              .then(data => {
+                $("#orderSubmitted").modal();
+
+              })
+              .fail(function () {
+                console.log("Error while creating cart");
+              });
+          } else {
+            return;
+          }
         } else if (vendor.id > 0) {
           $("#vendorName").text(vendor.user_name);
           $("#cartHasItems").modal();

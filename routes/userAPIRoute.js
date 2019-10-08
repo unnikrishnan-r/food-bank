@@ -1,6 +1,7 @@
 var db = require("../models");
 var Sequelize = require("sequelize");
 var moment = require("moment");
+var Op = Sequelize.Op;
 
 module.exports = function (app) {
 
@@ -44,10 +45,12 @@ module.exports = function (app) {
       .then(userList => {
 
         var vendorList = userList;
+        var today = new Date();
 
         if (userList.length > 0) {
 
           return db.ProductCatalog.findAll({
+            where: { [Op.and]: [{ product_current_qty: { [Op.gt]: 0 } }, { product_expiry_date: { [Op.gte]: today } }] },
             include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }],
             order: [[Sequelize.col("ProductCatalog.product_perishable"), "DESC"],
               Sequelize.col("ProductCatalog.product_expiry_date")]
@@ -65,7 +68,6 @@ module.exports = function (app) {
             } else {
               vendor = { id: 0, user_name: "" };
             }
-
             res.render("customerDashboard", { layout: "buyer", userList: vendorList, productList: productList, vendor: vendor });
           })
             .catch(error => {
