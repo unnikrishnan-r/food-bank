@@ -134,13 +134,52 @@ module.exports = function (app) {
   // Delete a cart item
   app.delete("/api/cart/item/:id", function (req, res) {
     console.log("Delete a cart");
-    db.UserCartDetail.destroy({ where: { id: req.params.id } })
+    db.UserCartDetail.findOne({ where: { id: req.params.id } })
+      .then(cartItem => {
+
+        return db.UserCartHeader.count({
+          where: { id: cartItem.cart_id }, include: [db.UserCartDetail]
+        })
+          .then(cartCount => {
+
+            //More than one item in the cart, delete cart item
+            if (cartCount > 1) {
+              return db.UserCartDetail.destroy({ where: { id: req.params.id } })
+                .then(affectedCount => {
+                  res.status(200).send(affectedCount + " deleted");
+                }).catch(function (error) {
+                  console.log(error);
+                  res.sendStatus(500);
+                });
+            }
+            else {
+              //if last item is being deleted, delete the cart header
+              return db.UserCartHeader.destroy({ where: { id: cartItem.cart_id } })
+                .then(affectedCount => {
+                  res.status(200).send(affectedCount + " deleted");
+                }).catch(function (error) {
+                  console.log(error);
+                  res.sendStatus(500);
+                });
+            }
+
+          }).catch(function (error) {
+            console.log(error);
+            res.sendStatus(500);
+          });
+
+      }).catch(function (error) {
+        console.log(error);
+        res.sendStatus(500);
+      });
+
+    /*db.UserCartDetail.destroy({ where: { id: req.params.id } })
       .then(affectedCount => {
         res.status(200).send(affectedCount + " deleted");
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
-      });
+      });*/
   });
 
   // Delete a cart using id
