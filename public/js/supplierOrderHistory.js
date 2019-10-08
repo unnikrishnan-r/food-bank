@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("#save-changes").prop('disabled', true);
+  $("#save-changes").prop("disabled", true);
   $(".dropdown-menu a").click(function() {
     $(this)
       .parents(".dropdown")
@@ -9,23 +9,23 @@ $(document).ready(function() {
       .parents(".dropdown")
       .find(".btn")
       .val($(this).data("value"));
-    $("#save-changes").prop('disabled', false);
-    $("#save-changes").removeClass('btn-secondary');
-    $("#save-changes").addClass('btn-success');
+    $("#save-changes").prop("disabled", false);
+    $("#save-changes").removeClass("btn-secondary");
+    $("#save-changes").addClass("btn-success");
 
-    });
+  });
 
   $("#save-changes").on("click", function (event) {
     event.stopImmediatePropagation();
     event.preventDefault();
     var order = {};
-    order.order_status = $(".dropdown").find('.btn').val();
+    order.order_status = $(".dropdown").find(".btn").val();
     var orderId = [];
     let elements = $(".selectOrder:checked");
     for (let element of elements) {
-      orderId.push($(element).attr("order-id"))
+      orderId.push($(element).attr("order-id"));
     }
-    order.order_id = orderId
+    order.order_id = orderId;
     console.log(order);
     console.log(Object.keys(order));
     // Send the PUT request.
@@ -35,20 +35,20 @@ $(document).ready(function() {
       contentType: "application/json"
 
     })
-    .then(
-      function (updatedRowCount) {
-        $.ajax("/api/notification/twilio", {
-          type: "POST",
-          data: JSON.stringify(order),
-          contentType: "application/json"
-    
-        }).then(response => console.log(response));
-    
-        console.log(updatedRowCount + "Orders updated");
-        location.reload();
-      }
+      .then(
+        function (updatedRowCount) {
+          $.ajax("/api/notification/twilio", {
+            type: "POST",
+            data: JSON.stringify(order),
+            contentType: "application/json"
+
+          }).then(response => console.log(response));
+
+          console.log(updatedRowCount + "Orders updated");
+          location.reload();
+        }
       );
-      
-    });
+
+  });
 
 });

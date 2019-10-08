@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 var db = require("../models");
 var Sequelize = require("sequelize");
 var moment = require("moment");
@@ -26,12 +25,12 @@ module.exports = function (app) {
           const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           orderObj.OrderDetails.forEach(orderedProduct => {
-            orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY")
+            orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY");
           });
           return orderObj;
         });
 
-        res.render("orderDetail", { layout: "buyer", order: orderDetail })
+        res.render("orderDetail", { layout: "buyer", order: orderDetail });
       }).catch(function (error) {
         console.log(error);
         res.sendStatus(500);
@@ -47,12 +46,12 @@ module.exports = function (app) {
           const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           orderObj.OrderDetails.forEach(orderedProduct => {
-            orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY")
+            orderedProduct.ProductCatalog.product_expiry_date = moment(orderedProduct.ProductCatalog.product_expiry_date).format("MM/DD/YYYY");
           });
           return orderObj;
         });
 
-        res.render("orderDetail", { layout: "vendor", order: orderDetail })
+        res.render("orderDetail", { layout: "vendor", order: orderDetail });
 
       }).catch(function (error) {
         console.log(error);
@@ -60,7 +59,7 @@ module.exports = function (app) {
       });
   });
 
-  // Get buyer's order - Input is buyer's Id. 
+  // Get buyer's order - Input is buyer's Id.
   //Output is Order Header details + Vendor details
   app.get("/api/orders/buyer/:id", function (req, res) {
     console.log("Get All orders for a customer");
@@ -69,7 +68,7 @@ module.exports = function (app) {
         where: { order_user_id: req.params.id }
         , include: [{
           model: db.User, as: "Vendor",
-          where: { id: Sequelize.col('OrderHeader.order_supplier_id') }
+          where: { id: Sequelize.col("OrderHeader.order_supplier_id") }
         }]
       })
       .then(orderList => {
@@ -77,7 +76,7 @@ module.exports = function (app) {
           const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
-        })
+        });
         res.render("customerOrderHistory", { layout: "buyer", order: orderList });
       }).catch(function (error) {
         console.log(error);
@@ -93,11 +92,11 @@ module.exports = function (app) {
       .findAll({
         where: {
           order_supplier_id: req.params.id
-          // , order_status: "Open" 
+          // , order_status: "Open"
         }
         , include: [{
           model: db.User, as: "Buyer",
-          where: { id: Sequelize.col('OrderHeader.order_user_id') }
+          where: { id: Sequelize.col("OrderHeader.order_user_id") }
         }]
       })
       .then(orderList => {
@@ -105,7 +104,7 @@ module.exports = function (app) {
           const orderObj = order.toJSON();
           orderObj.createdAt = moment(orderObj.createdAt).format("MM/DD/YYYY");
           return orderObj;
-        })
+        });
         res.render("supplierOrderHistory", { layout: "vendor", order: orderList });
       }).catch(function (error) {
         console.log(error);

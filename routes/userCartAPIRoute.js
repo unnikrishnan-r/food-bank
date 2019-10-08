@@ -1,6 +1,4 @@
-/* eslint-disable camelcase */
 var db = require("../models");
-var moment = require("moment");
 var Sequelize = require("sequelize");
 var Op = Sequelize.Op;
 
@@ -15,8 +13,7 @@ module.exports = function (app) {
 
         if (cartList.length > 0 && cartList[0].dataValues.UserCartDetails.length > 0) {
           vendor = cartList[0].dataValues.UserCartDetails[0].dataValues.ProductCatalog.dataValues.Vendor.dataValues;
-        }
-        else {
+        } else {
           vendor = { id: 0 };
         }
 
@@ -36,8 +33,7 @@ module.exports = function (app) {
 
         if (cartList.length > 0 && cartList[0].dataValues.UserCartDetails.length > 0) {
           vendor = cartList[0].dataValues.UserCartDetails[0].dataValues.ProductCatalog.dataValues.Vendor.dataValues;
-        }
-        else {
+        } else {
           vendor = { id: 0 };
         }
 
@@ -64,14 +60,14 @@ module.exports = function (app) {
 
   /* Create a new Cart
     {
-        "cart_owner_id": 1,       
+        "cart_owner_id": 1,
         "cart_status": "Open",
         "UserCartDetail" : {
           "product_id": 25,
           "quantity": 1
         }
-       
-      } 
+
+      }
   */
   app.post("/api/cart/user", function (req, res) {
     console.log("Create a Cart");

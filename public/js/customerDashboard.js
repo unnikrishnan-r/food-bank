@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 $(document).ready(function () {
 
   $(".place-order").on("click", function (event) {
@@ -28,11 +26,11 @@ $(document).ready(function () {
             cart_owner_id: localStorage.getItem("userId"),
             cart_status: "Open",
             UserCartDetail: []
-          }
+          };
 
           for (let element of elements) {
             let productID = $(element).data("product-id");
-            let qtyInputID = "#qty_input_" + productID;
+            // let qtyInputID = "#qty_input_" + productID;
             let qtyElement = document.getElementById("qty_input_" + productID);
             let quantity = qtyElement.value;
 
@@ -42,11 +40,11 @@ $(document).ready(function () {
               let qtyErrMsgID = "#error_msg_" + productID;
               $(qtyErrMsgID).text(qtyElement.validationMessage);
             }
-            
+
             var newCartDetail = {
               product_id: productID,
               quantity: quantity
-            }
+            };
 
             newCart.UserCartDetail.push(newCartDetail);
           }
@@ -55,25 +53,24 @@ $(document).ready(function () {
 
           // if (form.checkValidity()) {
 
-            $.ajax({
-              type: "POST",
-              url: "/api/cart/user",
-              data: JSON.stringify(newCart),
-              contentType: "application/json"
-            })
-              .then(data => {
-                $("#orderSubmitted").modal();
+          $.ajax({
+            type: "POST",
+            url: "/api/cart/user",
+            data: JSON.stringify(newCart),
+            contentType: "application/json"
+          })
+            .then(data => {
+              $("#orderSubmitted").modal();
 
-              })
-              .fail(function () {
-                console.log("Error while creating cart");
-              });
+            })
+            .fail(function () {
+              console.log("Error while creating cart");
+            });
           // }
           // else {
           //   return;
           // }
-        }
-        else if (vendor.id > 0) {
+        } else if (vendor.id > 0) {
           $("#vendorName").text(vendor.user_name);
           $("#cartHasItems").modal();
         }
@@ -84,7 +81,7 @@ $(document).ready(function () {
 
   });
 
-  $('#orderSubmitted').on('hidden.bs.modal', function (e) {
+  $("#orderSubmitted").on("hidden.bs.modal", function (e) {
     location.reload();
   });
 
@@ -96,7 +93,7 @@ $(document).ready(function () {
     }).then(results => {
       $("#vendorName").text();
       $("#nav-cart").text("Cart (0)");
-      $('#cartHasItems').modal('hide');
+      $("#cartHasItems").modal("hide");
     }).fail(function () {
       console.log("Error");
     });
