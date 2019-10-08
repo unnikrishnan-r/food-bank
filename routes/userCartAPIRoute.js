@@ -147,8 +147,7 @@ module.exports = function (app) {
                   console.log(error);
                   res.sendStatus(500);
                 });
-            }
-            else {
+            } else {
               //if last item is being deleted, delete the cart header
               return db.UserCartHeader.destroy({ where: { id: cartItem.cart_id } })
                 .then(affectedCount => {

@@ -68,8 +68,7 @@ $(document).ready(function () {
           } else {
             return;
           }
-        }
-        else if (vendor.id > 0) {
+        } else if (vendor.id > 0) {
           $("#vendorName").text(vendor.user_name);
           $("#cartHasItems").modal();
         }
