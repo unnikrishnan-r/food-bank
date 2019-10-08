@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 var db = require("../models");
 var Sequelize = require("sequelize");
 var moment = require("moment");
@@ -28,8 +27,7 @@ module.exports = function (app) {
 
         if (userList.length > 0) {
           res.redirect(`/api/users/${req.params.role}/${userList[0].id}`);
-        }
-        else {
+        } else {
           res.render("customerDashboard");
         }
 
@@ -54,8 +52,8 @@ module.exports = function (app) {
           return db.ProductCatalog.findAll({
             where: { [Op.and]: [{ product_current_qty: { [Op.gt]: 0 } }, { product_expiry_date: { [Op.gte]: today } }] },
             include: [{ model: db.User, as: "Vendor", where: { id: req.params.id } }],
-            order: [[Sequelize.col('ProductCatalog.product_perishable'), 'DESC'],
-            Sequelize.col('ProductCatalog.product_expiry_date')]
+            order: [[Sequelize.col("ProductCatalog.product_perishable"), "DESC"],
+              Sequelize.col("ProductCatalog.product_expiry_date")]
           }).then(productList => {
             productList.map(product => {
               const productObj = product.toJSON();
@@ -67,9 +65,8 @@ module.exports = function (app) {
 
             if (productList.length > 0) {
               vendor = productList[0].Vendor;
-            }
-            else {
-              vendor = { id: 0, user_name: '' }
+            } else {
+              vendor = { id: 0, user_name: "" };
             }
             res.render("customerDashboard", { layout: "buyer", userList: vendorList, productList: productList, vendor: vendor });
           })
@@ -77,8 +74,7 @@ module.exports = function (app) {
               console.error(error);
               res.sendStatus(400);
             });
-        }
-        else {
+        } else {
           res.render("customerDashboard");
         }
 

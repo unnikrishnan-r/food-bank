@@ -1,7 +1,7 @@
 $(document).ready(function() {
   $("#login-btn").on("click", function(event) {
     localStorage.clear();
-    console.log("Local storage cleared")
+    console.log("Local storage cleared");
     event.preventDefault();
     var user = {
       user_name: $("#username")
@@ -25,20 +25,20 @@ $(document).ready(function() {
 
 
         switch (user.userRole) {
-          case "Vendor":
-            location.href = `/api/products/vendor/${user.userId}`;
-            break;
-          case "Buyer":
-            location.href = `/api/users/Vendor`;
-            break;
+        case "Vendor":
+          location.href = `/api/products/vendor/${user.userId}`;
+          break;
+        case "Buyer":
+          location.href = "/api/users/Vendor";
+          break;
 
-          default:
-            console.log("Default");
-            break;
+        default:
+          console.log("Default");
+          break;
         }
       } else {
         console.log("Log in failed");
-          $("#buttonAlert").addClass("show");
+        $("#buttonAlert").addClass("show");
       }
     });
   });
