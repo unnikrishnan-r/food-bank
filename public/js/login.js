@@ -1,5 +1,5 @@
-$(document).ready(function() {
-  $("#login-btn").on("click", function(event) {
+$(document).ready(function () {
+  $("#login-btn").on("click", function (event) {
     localStorage.clear();
     console.log("Local storage cleared");
     event.preventDefault();
@@ -12,11 +12,17 @@ $(document).ready(function() {
         .trim()
     };
 
+    if (!user.user_name || !user.user_password) {
+      console.log("Log in failed");
+      $("#buttonEmptyAlert").addClass("show");
+      return;
+    }
+
     // Send the PUT request.
     $.ajax("/api/login", {
       type: "post",
       data: user
-    }).then(function(user) {
+    }).then(function (user) {
       if (user) {
         console.log("logged in as ", user.userRole, user.userId);
         localStorage.setItem("userId", user.userId);
@@ -25,16 +31,16 @@ $(document).ready(function() {
 
 
         switch (user.userRole) {
-        case "Vendor":
-          location.href = `/api/products/vendor/${user.userId}`;
-          break;
-        case "Buyer":
-          location.href = "/api/users/Vendor";
-          break;
+          case "Vendor":
+            location.href = `/api/products/vendor/${user.userId}`;
+            break;
+          case "Buyer":
+            location.href = "/api/users/Vendor";
+            break;
 
-        default:
-          console.log("Default");
-          break;
+          default:
+            console.log("Default");
+            break;
         }
       } else {
         console.log("Log in failed");
